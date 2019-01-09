@@ -167,8 +167,8 @@ app.post("/receiveData", (req, res) => {
 
 
     // :: Temperature (Signed)
-    tempvalue = parseInt(payload.slice(4, 8), 16);
-    tempnum = payload.slice(4, 8);
+    tempvalue = parseInt(payload.slice(5, 9), 16);
+    tempnum = payload.slice(5, 9);
 
     if (tempvalue >= 32768) {
         tempvalue = ((65536 - tempvalue) * -0.1).toFixed(2);
