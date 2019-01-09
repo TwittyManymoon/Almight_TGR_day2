@@ -72,7 +72,7 @@ var payload, teamID, timestamp, barovalue, tempvalue, humidvalue, accexvalue, ac
 // :: MongoDB Localhost
 // mongoose.connect("mongodb://202.139.192.89/TGR_2019_Almight")
 var option = { auth: { user: "Twitty", password: "thigmal1234" } };
-mongoose.connect("mongodb://Twitty:thigmal1234@202.139.192.89/hwData", option, { useNewUrlParser: true });
+mongoose.connect("mongodb://Twitty:thigmal1234@202.139.192.89/hwData", { useNewUrlParser: true });
 
 
 let db = mongoose.connection;
@@ -87,46 +87,46 @@ db.on("error", err => {
 
 /*------------ Create middleware ------------*/
 
-// // Load engine
-// app.use(bodyparser.urlencoded({ entended: false }));
-// app.use(bodyparser.json());
+// Load engine
+app.use(bodyparser.urlencoded({ entended: false }));
+app.use(bodyparser.json());
 
-// /*------------ Create API route : EDIT ------------*/
+/*------------ Create API route : EDIT ------------*/
 
-// // Test 1
-// // app.get('/api/:data', (req, res) => {
-// //   console.log(req.body);
-// //   res.send(req.body)
-// // });
-
-// // Test 2
-// app.get('/api/almight', (req, res) => {
-//     console.log("Someone access your motherfucking server");
-//     res.send(`Welcome motherfucker, your motherfucking data: ${payload}`);
+// Test 1
+// app.get('/api/:data', (req, res) => {
+//   console.log(req.body);
+//   res.send(req.body)
 // });
 
-// // Dashboard
-// app.get('/api/dashboard', (req, res) => {
-//     res.send(`Dashboard\n
-//                Raw Data           :     ${payload}\n
-//                Timestamp          :     ${timestamp}\n
-//                Team ID            :     ${teamID}\n
-//                Barometer          :     ${barovalue}  hectopascal\n
-//                Temperature        :     ${tempvalue}  Celsius\n
-//                Humidity           :     ${humidvalue} % RHO\n
-//                Accelerometer_X    :     ${accexvalue} G\n
-//                Accelerometer_Y    :     ${acceyvalue} G\n
-//                Accelerometer_Z    :     ${accezvalue} G\n
-//                Gyrometer_X        :     ${gyroxvalue} °/s\n
-//                Gyrometer_Y        :     ${gyroyvalue} °/s\n
-//                Gyrometer_Z        :     ${gyrozvalue} °/s\n
-//                Magnetometer       :     ${magvalue}   tesla\n
-//                DI                 :     ${digitalinvalue}\n
-//                DO                 :     ${digitaloutvalue}\n `);
+// Test 2
+app.get('/api/almight', (req, res) => {
+    console.log(`Someone access your motherfucking server : ${payload}`);
+    res.send(`Welcome motherfucker, your motherfucking data: ${payload}`);
+});
 
-// });
+// Dashboard
+app.get('/api/dashboard', (req, res) => {
+    res.send(`Dashboard\n
+               Raw Data           :     ${payload}\n
+               Timestamp          :     ${timestamp}\n
+               Team ID            :     ${teamID}\n
+               Barometer          :     ${barovalue}  hectopascal\n
+               Temperature        :     ${tempvalue}  Celsius\n
+               Humidity           :     ${humidvalue} % RHO\n
+               Accelerometer_X    :     ${accexvalue} G\n
+               Accelerometer_Y    :     ${acceyvalue} G\n
+               Accelerometer_Z    :     ${accezvalue} G\n
+               Gyrometer_X        :     ${gyroxvalue} °/s\n
+               Gyrometer_Y        :     ${gyroyvalue} °/s\n
+               Gyrometer_Z        :     ${gyrozvalue} °/s\n
+               Magnetometer       :     ${magvalue}   tesla\n
+               DI                 :     ${digitalinvalue}\n
+               DO                 :     ${digitaloutvalue}\n `);
 
-// // Main : handle values from sensors
+});
+
+// Main : handle values from sensors
 
 // app.post("/api/almight", (req, res) => {
 
@@ -432,9 +432,9 @@ db.on("error", err => {
 
 // /*------------ Start Server ------------*/
 
-// app.listen(8080, () => {
-//     console.log("Server is started on port 8080");
-// });
+app.listen(8080, () => {
+    console.log("Server is started on port 8080");
+});
 
 // // :: Sample Payload
 // //   "00732772016700eb02687103710010fffd04030486ffc8ffeb00c405021585060064070100";
