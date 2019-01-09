@@ -449,7 +449,7 @@ app.post("/receiveData", (req, res) => {
 
 app.get("/showData", (req, res) => {
 
-    db.temperatures.find({}, (err, data) => {
+    db.temperatures.find({}.toArray((err, data) => {
         if (err) {
             console.log(err);
             return;
@@ -458,6 +458,7 @@ app.get("/showData", (req, res) => {
             res.send(data);
         }
     })
+    )
 
 });
 
