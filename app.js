@@ -109,31 +109,31 @@ app.get("/articles/add", (req, res) => {
 // });
 
 // Test 2
-app.get('/api/almight', (req, res) => {
-    console.log(`Someone access your motherfucking server : ${payload}`);
-    res.send(`Welcome motherfucker, your motherfucking data: ${payload}`);
-});
+// app.get('/api/almight', (req, res) => {
+//     console.log(`Someone access your motherfucking server : ${payload}`);
+//     res.send(`Welcome motherfucker, your motherfucking data: ${payload}`);
+// });
 
 // Dashboard
-app.get('/api/dashboard', (req, res) => {
-    res.send(`Dashboard\n
-               Raw Data           :     ${payload}\n
-               Timestamp          :     ${timestamp}\n
-               Team ID            :     ${teamID}\n
-               Barometer          :     ${barovalue}  hectopascal\n
-               Temperature        :     ${tempvalue}  Celsius\n
-               Humidity           :     ${humidvalue} % RHO\n
-               Accelerometer_X    :     ${accexvalue} G\n
-               Accelerometer_Y    :     ${acceyvalue} G\n
-               Accelerometer_Z    :     ${accezvalue} G\n
-               Gyrometer_X        :     ${gyroxvalue} °/s\n
-               Gyrometer_Y        :     ${gyroyvalue} °/s\n
-               Gyrometer_Z        :     ${gyrozvalue} °/s\n
-               Magnetometer       :     ${magvalue}   tesla\n
-               DI                 :     ${digitalinvalue}\n
-               DO                 :     ${digitaloutvalue}\n `);
+// app.get('/api/dashboard', (req, res) => {
+//     res.send(`Dashboard\n
+//                Raw Data           :     ${payload}\n
+//                Timestamp          :     ${timestamp}\n
+//                Team ID            :     ${teamID}\n
+//                Barometer          :     ${barovalue}  hectopascal\n
+//                Temperature        :     ${tempvalue}  Celsius\n
+//                Humidity           :     ${humidvalue} % RHO\n
+//                Accelerometer_X    :     ${accexvalue} G\n
+//                Accelerometer_Y    :     ${acceyvalue} G\n
+//                Accelerometer_Z    :     ${accezvalue} G\n
+//                Gyrometer_X        :     ${gyroxvalue} °/s\n
+//                Gyrometer_Y        :     ${gyroyvalue} °/s\n
+//                Gyrometer_Z        :     ${gyrozvalue} °/s\n
+//                Magnetometer       :     ${magvalue}   tesla\n
+//                DI                 :     ${digitalinvalue}\n
+//                DO                 :     ${digitaloutvalue}\n `);
 
-});
+// });
 
 // Main : handle values from sensors
 
@@ -150,11 +150,11 @@ app.post("/receiveData", (req, res) => {
 
     // devEUI = req.body.DevEUI_uplink.DevEUI;                                 // DevEUI
     // teamID = devEUI[devEUI.length - 2] + devEUI[devEUI.length - 1];         // Team ID 
-    // payload = req.body.DevEUI_uplink.payload_hex;                           // Payload
+    payload = req.body.DevEUI_uplink.payload_hex;                           // Payload
     // timestamp = req.body.DevEUI_uplink.Time;                                // Timestamp
-    bbb = req.body;
+    // bbb = req.body;
     // console.log(`fucking data : ${teamID} = ${payload}`);        
-    console.log(`fucking data : ${bbb}`);
+    console.log(`fucking data : ${payload}`);
     console.log("abc");                       // Server Debugger (Payload)
 
     // // :: Barometer
