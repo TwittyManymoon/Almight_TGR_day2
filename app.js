@@ -157,131 +157,131 @@ app.post("/receiveData", (req, res) => {
     console.log(`fucking data : ${bbb}`);
     console.log("abc");                       // Server Debugger (Payload)
 
-    // :: Barometer
-    barovalue = (parseInt(payload.slice(4, 8), 16) * 0.1).toFixed(2);
-    barometer.timestamp = timestamp;
-    barometer.teamID = teamID;
-    barometer.name = "barometer";
-    barometer.value = barovalue;
-    barometer.unit = "hectopascal";
+    // // :: Barometer
+    // barovalue = (parseInt(payload.slice(4, 8), 16) * 0.1).toFixed(2);
+    // barometer.timestamp = timestamp;
+    // barometer.teamID = teamID;
+    // barometer.name = "barometer";
+    // barometer.value = barovalue;
+    // barometer.unit = "hectopascal";
 
 
-    // :: Temperature (Signed)
-    tempvalue = parseInt(payload.slice(12, 16), 16);
+    // // :: Temperature (Signed)
+    // tempvalue = parseInt(payload.slice(12, 16), 16);
 
-    if (tempvalue >= 32768) {
-        tempvalue = ((65536 - tempvalue) * -0.1).toFixed(2);
-    } else {
-        tempvalue = (tempvalue * 0.1).toFixed(2);
-    }
-    temperature.timestamp = timestamp;
-    temperature.teamID = teamID;
-    // temperature.name = "temperature";
-    temperature.temp = tempvalue;
-    // temperature.unit = "°C";
+    // if (tempvalue >= 32768) {
+    //     tempvalue = ((65536 - tempvalue) * -0.1).toFixed(2);
+    // } else {
+    //     tempvalue = (tempvalue * 0.1).toFixed(2);
+    // }
+    // temperature.timestamp = timestamp;
+    // temperature.teamID = teamID;
+    // // temperature.name = "temperature";
+    // temperature.temp = tempvalue;
+    // // temperature.unit = "°C";
 
-    // :: Humidity
-    humidvalue = (parseInt(payload.slice(20, 22), 16) * 0.5).toFixed(2);
-    humidity.timestamp = timestamp;
-    humidity.teamID = teamID;
-    humidity.name = "humidity";
-    humidity.value = humidvalue;
-    humidity.unit = "%";
+    // // :: Humidity
+    // humidvalue = (parseInt(payload.slice(20, 22), 16) * 0.5).toFixed(2);
+    // humidity.timestamp = timestamp;
+    // humidity.teamID = teamID;
+    // humidity.name = "humidity";
+    // humidity.value = humidvalue;
+    // humidity.unit = "%";
 
-    // :: Accelerometer (Signed)
+    // // :: Accelerometer (Signed)
 
-    // X-Axis
-    accexvalue = parseInt(payload.slice(26, 30), 16);
-    if (accexvalue >= 32768) {
-        // accexvalue = ((65536 - accexvalue) * -0.001).toFixed(2);
-        accexvalue = ((65536 - accexvalue) * -0.001).toFixed(4);
-    } else {
-        accexvalue = (accexvalue * 0.001).toFixed(4);
-    }
+    // // X-Axis
+    // accexvalue = parseInt(payload.slice(26, 30), 16);
+    // if (accexvalue >= 32768) {
+    //     // accexvalue = ((65536 - accexvalue) * -0.001).toFixed(2);
+    //     accexvalue = ((65536 - accexvalue) * -0.001).toFixed(4);
+    // } else {
+    //     accexvalue = (accexvalue * 0.001).toFixed(4);
+    // }
 
-    // Y-Axis
-    acceyvalue = (parseInt(payload.slice(30, 34), 16));
-    if (acceyvalue >= 32768) {
-        acceyvalue = ((65536 - acceyvalue) * -0.001).toFixed(4);
-    } else {
-        acceyvalue = (acceyvalue * 0.001).toFixed(4);
-    }
+    // // Y-Axis
+    // acceyvalue = (parseInt(payload.slice(30, 34), 16));
+    // if (acceyvalue >= 32768) {
+    //     acceyvalue = ((65536 - acceyvalue) * -0.001).toFixed(4);
+    // } else {
+    //     acceyvalue = (acceyvalue * 0.001).toFixed(4);
+    // }
 
-    // Z-Axis
-    accezvalue = (parseInt(payload.slice(34, 38), 16));
-    if (accezvalue >= 32768) {
-        accezvalue = ((65536 - accezvalue) * -0.001).toFixed(4);
-    } else {
-        accezvalue = (accezvalue * 0.001).toFixed(4);
-    }
-    accelerometer.timestamp = timestamp;
-    accelerometer.teamID = teamID;
-    accelerometer.name = "accelerometer";
-    accelerometer.valueX = accexvalue;
-    accelerometer.valueY = acceyvalue;
-    accelerometer.valueZ = accezvalue;
-    accelerometer.unit = "G";
+    // // Z-Axis
+    // accezvalue = (parseInt(payload.slice(34, 38), 16));
+    // if (accezvalue >= 32768) {
+    //     accezvalue = ((65536 - accezvalue) * -0.001).toFixed(4);
+    // } else {
+    //     accezvalue = (accezvalue * 0.001).toFixed(4);
+    // }
+    // accelerometer.timestamp = timestamp;
+    // accelerometer.teamID = teamID;
+    // accelerometer.name = "accelerometer";
+    // accelerometer.valueX = accexvalue;
+    // accelerometer.valueY = acceyvalue;
+    // accelerometer.valueZ = accezvalue;
+    // accelerometer.unit = "G";
 
-    // :: Gyrometer (Signed)
+    // // :: Gyrometer (Signed)
 
-    // X-Axis
-    gyroxvalue = parseInt(payload.slice(42, 46), 16);
-    if (gyroxvalue >= 32768) {
-        gyroxvalue = ((65536 - gyroxvalue) * -0.01).toFixed(2);
-    } else {
-        gyroxvalue = (gyroxvalue * 0.01).toFixed(2);
-    }
-    // Y-Axis
-    gyroyvalue = parseInt(payload.slice(46, 50), 16);
-    if (gyroyvalue >= 32768) {
-        gyroyvalue = ((65536 - gyroyvalue) * -0.01).toFixed(2);
-    } else {
-        gyroyvalue = (gyroyvalue * 0.01).toFixed(2);
-    }
-    // Z-Axis
-    gyrozvalue = parseInt(payload.slice(50, 54), 16);
-    if (gyrozvalue >= 32768) {
-        gyrozvalue = ((65536 - gyrozvalue) * -0.01).toFixed(2);
-    } else {
-        gyrozvalue = (gyrozvalue * 0.01).toFixed(2);
-    }
-    gyrometer.timestamp = timestamp;
-    gyrometer.teamID = teamID;
-    gyrometer.name = "gyrometer";
-    gyrometer.valueX = gyroxvalue;
-    gyrometer.valueY = gyroyvalue;
-    gyrometer.valueZ = gyrozvalue;
-    gyrometer.unit = "°/s";
+    // // X-Axis
+    // gyroxvalue = parseInt(payload.slice(42, 46), 16);
+    // if (gyroxvalue >= 32768) {
+    //     gyroxvalue = ((65536 - gyroxvalue) * -0.01).toFixed(2);
+    // } else {
+    //     gyroxvalue = (gyroxvalue * 0.01).toFixed(2);
+    // }
+    // // Y-Axis
+    // gyroyvalue = parseInt(payload.slice(46, 50), 16);
+    // if (gyroyvalue >= 32768) {
+    //     gyroyvalue = ((65536 - gyroyvalue) * -0.01).toFixed(2);
+    // } else {
+    //     gyroyvalue = (gyroyvalue * 0.01).toFixed(2);
+    // }
+    // // Z-Axis
+    // gyrozvalue = parseInt(payload.slice(50, 54), 16);
+    // if (gyrozvalue >= 32768) {
+    //     gyrozvalue = ((65536 - gyrozvalue) * -0.01).toFixed(2);
+    // } else {
+    //     gyrozvalue = (gyrozvalue * 0.01).toFixed(2);
+    // }
+    // gyrometer.timestamp = timestamp;
+    // gyrometer.teamID = teamID;
+    // gyrometer.name = "gyrometer";
+    // gyrometer.valueX = gyroxvalue;
+    // gyrometer.valueY = gyroyvalue;
+    // gyrometer.valueZ = gyrozvalue;
+    // gyrometer.unit = "°/s";
 
-    // :: Magnetometer (Signed)
+    // // :: Magnetometer (Signed)
 
-    magvalue = (parseInt(payload.slice(58, 62), 16));
-    if (magvalue >= 32768) {
-        magvalue = ((65536 - magvalue) * -0.01).toFixed(2);
-    } else {
-        magvalue = (magvalue * 0.01).toFixed(2);
-    }
-    magnetometer.timestamp = timestamp;
-    magnetometer.teamID = teamID;
-    magnetometer.name = "magnetometer";
-    magnetometer.value = magvalue;
-    magnetometer.unit = "tesla";
+    // magvalue = (parseInt(payload.slice(58, 62), 16));
+    // if (magvalue >= 32768) {
+    //     magvalue = ((65536 - magvalue) * -0.01).toFixed(2);
+    // } else {
+    //     magvalue = (magvalue * 0.01).toFixed(2);
+    // }
+    // magnetometer.timestamp = timestamp;
+    // magnetometer.teamID = teamID;
+    // magnetometer.name = "magnetometer";
+    // magnetometer.value = magvalue;
+    // magnetometer.unit = "tesla";
 
-    // :: Digital Input
-    digitalinvalue = (parseInt(payload.slice(66, 68), 16) * 0.01).toFixed(2);
-    digitalinput.timestamp = timestamp;
-    digitalinput.teamID = teamID;
-    digitalinput.name = "digital_input";
-    digitalinput.value = digitalinvalue;
-    digitalinput.unit = "ON/OFF";
+    // // :: Digital Input
+    // digitalinvalue = (parseInt(payload.slice(66, 68), 16) * 0.01).toFixed(2);
+    // digitalinput.timestamp = timestamp;
+    // digitalinput.teamID = teamID;
+    // digitalinput.name = "digital_input";
+    // digitalinput.value = digitalinvalue;
+    // digitalinput.unit = "ON/OFF";
 
-    // :: Digital Output
-    digitaloutvalue = (parseInt(payload.slice(72, 74), 16) * 0.01).toFixed(2);
-    digitaloutput.timestamp = timestamp;
-    digitaloutput.teamID = teamID;
-    digitaloutput.name = "digital_output";
-    digitaloutput.value = digitaloutvalue;
-    digitaloutput.unit = "ON/OFF";
+    // // :: Digital Output
+    // digitaloutvalue = (parseInt(payload.slice(72, 74), 16) * 0.01).toFixed(2);
+    // digitaloutput.timestamp = timestamp;
+    // digitaloutput.teamID = teamID;
+    // digitaloutput.name = "digital_output";
+    // digitaloutput.value = digitaloutvalue;
+    // digitaloutput.unit = "ON/OFF";
 
     // Save values from sensors to database
 
