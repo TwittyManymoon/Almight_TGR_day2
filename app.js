@@ -167,9 +167,7 @@ app.post("/receiveData", (req, res) => {
 
 
     // :: Temperature (Signed)
-    tempvalue = parseInt(payload.slice(6, 10), 16);
-
-    tempnum = payload.slice(6, 10);
+    tempvalue = parseInt(payload.slice(7, 11), 16);
 
     if (tempvalue >= 32768) {
         tempvalue = ((65536 - tempvalue) * -0.1).toFixed(2);
@@ -183,7 +181,7 @@ app.post("/receiveData", (req, res) => {
     // temperature.unit = "°C";
 
     console.log(`temp : ${tempvalue}`);        // Server Debugger (Payload)
-    console.log(`tempnum : ${tempnum}`);
+    // console.log(`tempnum : ${tempnum}`);
 
 
     // // :: Humidity
