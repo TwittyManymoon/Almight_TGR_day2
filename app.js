@@ -106,7 +106,17 @@ app.use(bodyparser.json());
 // });
 
 // Dashboard
-// app.get('/api/dashboard', (req, res) => {
+app.get('/showData', (req, res) => {
+    res.send(`Dashboard\n
+               Timestamp          :     ${timestamp}\n
+               Team ID            :     ${teamID}\n
+               Temperature        :     ${tempvalue}  Celsius\n
+ `);
+
+});
+
+// // Dashboard
+// app.get('/showData', (req, res) => {
 //     res.send(`Dashboard\n
 //                Raw Data           :     ${payload}\n
 //                Timestamp          :     ${timestamp}\n
@@ -125,7 +135,6 @@ app.use(bodyparser.json());
 //                DO                 :     ${digitaloutvalue}\n `);
 
 // });
-
 // Main : handle values from sensors
 
 app.post("/receiveData", (req, res) => {
@@ -148,14 +157,9 @@ app.post("/receiveData", (req, res) => {
     timestamp = JSON.stringify(req.body.DevEUI_uplink.Time);                                // Timestamp
     // bbb = req.body;
     // console.log(`fucking data : ${teamID} = ${payload}`);        
-    console.log(`fucking data1 : ${payload}`);
-    console.log(`fucking data2 : ${teamID}`);
+    console.log(`payload : ${payload}`);
+    console.log(`teamID : ${teamID}`);
     console.log(`body : ${devEUI}`);
-
-
-
-
-
 
     // // :: Barometer
     // barovalue = (parseInt(payload.slice(4, 8), 16) * 0.1).toFixed(2);
