@@ -72,7 +72,7 @@ var payload, teamID, timestamp, barovalue, tempvalue, humidvalue, accexvalue, ac
 // :: MongoDB Localhost
 // mongoose.connect("mongodb://202.139.192.89/TGR_2019_Almight")
 var option = { auth: { user: "Twitty", password: "thigmal1234" } };
-mongoose.connect("mongodb://202.139.192.89/tgr2019", option);
+mongoose.connect("mongodb://Twitty:thigmal1234@202.139.192.89:27017/hwData", option);
 
 
 let db = mongoose.connection;
@@ -274,78 +274,78 @@ app.post("/api/almight", (req, res) => {
 
     // Save values from sensors to database
 
-    barometer.save(err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            // console.log("baro saved");
-            res.redirect("/");
-        }
-    });
-    temperature.save(err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            // console.log("temp saved");
-            // res.redirect("/");
-        }
-    });
-    humidity.save(err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            // console.log("humid saved");
-            // res.redirect("/");
-        }
-    });
-    accelerometer.save(err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            // console.log("acce saved");
-            // res.redirect("/");
-        }
-    });
-    gyrometer.save(err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            // console.log("gyro saved");
-            // res.redirect("/");
-        }
-    });
-    magnetometer.save(err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            // console.log("magne saved");
-            // res.redirect("/");
-        }
-    });
-    digitalinput.save(err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            // console.log("digital_input saved");
-            // res.redirect("/");
-        }
-    });
-    digitaloutput.save(err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            // console.log("digital_output saved");
-            // res.redirect("/");
-        }
-    });
+    // barometer.save(err => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         // console.log("baro saved");
+    //         res.redirect("/");
+    //     }
+    // });
+    // temperature.save(err => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         // console.log("temp saved");
+    //         // res.redirect("/");
+    //     }
+    // });
+    // humidity.save(err => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         // console.log("humid saved");
+    //         // res.redirect("/");
+    //     }
+    // });
+    // accelerometer.save(err => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         // console.log("acce saved");
+    //         // res.redirect("/");
+    //     }
+    // });
+    // gyrometer.save(err => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         // console.log("gyro saved");
+    //         // res.redirect("/");
+    //     }
+    // });
+    // magnetometer.save(err => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         // console.log("magne saved");
+    //         // res.redirect("/");
+    //     }
+    // });
+    // digitalinput.save(err => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         // console.log("digital_input saved");
+    //         // res.redirect("/");
+    //     }
+    // });
+    // digitaloutput.save(err => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         // console.log("digital_output saved");
+    //         // res.redirect("/");
+    //     }
+    // });
 });
 
 // API - Barometer ; http://'IP'/api/pressure/teamID/records
