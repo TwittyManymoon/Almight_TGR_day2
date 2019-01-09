@@ -10,15 +10,7 @@ let temperatureSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  name: {
-    type: String,
-    required: true
-  },
-  value: {
-    type: String,
-    required: true
-  },
-  unit: {
+  temp: {
     type: String,
     required: true
   }
