@@ -7,11 +7,11 @@ let temperatureSchema = mongoose.Schema({
     required: true
   },
   teamID: {
-    type: Number,
+    type: String,
     required: true
   },
   temp: {
-    type: Number,
+    type: String,
     required: true
   }
 });
