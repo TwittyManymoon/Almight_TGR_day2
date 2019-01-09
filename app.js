@@ -105,15 +105,15 @@ app.use(bodyparser.json());
 //     res.send(`Welcome motherfucker, your motherfucking data: ${payload}`);
 // });
 
-// Dashboard
-app.get('/showData', (req, res) => {
-    res.send(`Dashboard\n
-               Timestamp          :     ${timestamp}\n
-               Team ID            :     ${teamID}\n
-               Temperature        :     ${tempvalue}  Celsius\n
- `);
+// // Dashboard
+// app.get('/showData', (req, res) => {
+//     res.send(`Dashboard\n
+//                Timestamp          :     ${timestamp}\n
+//                Team ID            :     ${teamID}\n
+//                Temperature        :     ${tempvalue}  Celsius\n
+//  `);
 
-});
+// });
 
 // // Dashboard
 // app.get('/showData', (req, res) => {
@@ -444,6 +444,52 @@ app.post("/receiveData", (req, res) => {
 //         });
 //     }
 
+
+
+app.get("/showData", (req, res) => {
+
+    let teamID_bar = req.params.teamIDbar;
+    let records_bar = req.params.recordsbar;
+
+    let barro_array = [];
+
+    // initialize promise
+
+    var promise_bar = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+    });
+
+    // async function
+
+    Temperature.find({ teamID: teamID_bar }, (err, value) => {
+        if (err) {
+            console.log(err);
+        } else {
+
+            for (let i = 0; i < value.length; i++) {
+                console.log(`
+                                timestamp : ${value[i].timestamp}
+                                teamID : ${value[i].teamID}
+                                temperature : ${value[i].temp}
+                                `);
+                promise_bar
+                    .then(function () {
+                        barro_array.push(value[i].value);
+                        console.log(barro_array);
+
+                    })
+
+                    .then(function () {
+                        res.send(`temperature : ${barro_array}`);
+                    });
+            }
+        }
+
+    });
+
+});
 
 
 
