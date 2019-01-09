@@ -140,16 +140,15 @@ app.post("/receiveData", (req, res) => {
     let digitaloutput = new Digitaloutput();
 
     // devEUI = req.body.DevEUI_uplink.DevEUI;                                 // DevEUI
-    // teamID = devEUI[devEUI.length - 2] + devEUI[devEUI.length - 1];         // Team ID 
+    teamID = devEUI[devEUI.length - 2] + devEUI[devEUI.length - 1];         // Team ID 
     payload = req.body.DevEUI_uplink.payload_hex;                           // Payload
-    payload2 = req.body.DevEUI_uplink;
-    payload3 = req.body.DevEUI_uplink.payload;
+    // payload2 = req.body.DevEUI_uplink;
+    // payload3 = req.body.DevEUI_uplink.payload;
     // timestamp = req.body.DevEUI_uplink.Time;                                // Timestamp
     // bbb = req.body;
     // console.log(`fucking data : ${teamID} = ${payload}`);        
     console.log(`fucking data1 : ${payload}`);
-    console.log(`fucking data2 : ${payload2}`);
-    console.log(`fucking data3 : ${payload3}`);
+    console.log(`fucking data2 : ${teamID}`);
     console.log("abc");        // Server Debugger (Payload)
 
 
