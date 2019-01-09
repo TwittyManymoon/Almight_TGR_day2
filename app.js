@@ -150,7 +150,7 @@ app.post("/receiveData", (req, res) => {
     // console.log(`fucking data : ${teamID} = ${payload}`);        
     console.log(`fucking data1 : ${payload}`);
     console.log(`fucking data2 : ${teamID}`);
-    console.log(`body : ${JSON.parse(body)}`);
+    console.log(`body : ${JSON.stringify(body)}`);
     console.log("abc");        // Server Debugger (Payload)
 
 
