@@ -158,8 +158,9 @@ app.post("/receiveData", (req, res) => {
     // bbb = req.body;
     // console.log(`fucking data : ${teamID} = ${payload}`);        
     console.log(`payload : ${payload}`);
-    console.log(`teamID : ${teamID}`);
     console.log(`body : ${devEUI}`);
+    console.log(`teamID : ${teamID}`);
+
 
     // // :: Barometer
     // barovalue = (parseInt(payload.slice(4, 8), 16) * 0.1).toFixed(2);
@@ -186,7 +187,7 @@ app.post("/receiveData", (req, res) => {
     // temperature.unit = "°C";
     console.log(`timestamp : ${timestamp}`)
     console.log(`temp : ${tempvalue}`);        // Server Debugger (Payload)
-    console.log(`tempnum : ${tempnum}`);
+    // console.log(`tempnum : ${tempnum}`);
 
 
     // // :: Humidity
@@ -448,46 +449,15 @@ app.post("/receiveData", (req, res) => {
 
 app.get("/showData", (req, res) => {
 
-    let teamID_bar = req.params.teamIDbar;
-    let records_bar = req.params.recordsbar;
-
-    let barro_array = [];
-
-    // initialize promise
-
-    var promise_bar = new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve();
-        }, 1000);
-    });
-
-    // async function
-
-    Temperature.find({ teamID: teamID_bar }, (err, value) => {
+    db.temperatures.find({}, (err, data) => {
         if (err) {
             console.log(err);
-        } else {
-
-            for (let i = 0; i < value.length; i++) {
-                console.log(`
-                                timestamp : ${value[i].timestamp}
-                                teamID : ${value[i].teamID}
-                                temperature : ${value[i].temp}
-                                `);
-                promise_bar
-                    .then(function () {
-                        barro_array.push(value[i].value);
-                        console.log(barro_array);
-
-                    })
-
-                    .then(function () {
-                        res.send(`temperature : ${barro_array}`);
-                    });
-            }
+            return;
         }
-
-    });
+        else {
+            res.send(data);
+        }
+    })
 
 });
 
