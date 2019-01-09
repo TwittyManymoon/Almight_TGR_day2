@@ -145,13 +145,15 @@ app.post("/receiveData", (req, res) => {
 
     // payload2 = req.body.DevEUI_uplink;
     // payload3 = req.body.DevEUI_uplink.payload;
-    // timestamp = req.body.DevEUI_uplink.Time;                                // Timestamp
+    timestamp = JSON.stringify(req.body.DevEUI_uplink.Time);                                // Timestamp
     // bbb = req.body;
     // console.log(`fucking data : ${teamID} = ${payload}`);        
     console.log(`fucking data1 : ${payload}`);
     console.log(`fucking data2 : ${teamID}`);
     console.log(`body : ${devEUI}`);
-    console.log("abc");        // Server Debugger (Payload)
+
+
+
 
 
 
@@ -164,19 +166,21 @@ app.post("/receiveData", (req, res) => {
     // barometer.unit = "hectopascal";
 
 
-    // // :: Temperature (Signed)
-    // tempvalue = parseInt(payload.slice(12, 16), 16);
+    // :: Temperature (Signed)
+    tempvalue = parseInt(payload.slice(6, 10), 16);
 
-    // if (tempvalue >= 32768) {
-    //     tempvalue = ((65536 - tempvalue) * -0.1).toFixed(2);
-    // } else {
-    //     tempvalue = (tempvalue * 0.1).toFixed(2);
-    // }
-    // temperature.timestamp = timestamp;
-    // temperature.teamID = teamID;
-    // // temperature.name = "temperature";
-    // temperature.temp = tempvalue;
-    // // temperature.unit = "°C";
+    if (tempvalue >= 32768) {
+        tempvalue = ((65536 - tempvalue) * -0.1).toFixed(2);
+    } else {
+        tempvalue = (tempvalue * 0.1).toFixed(2);
+    }
+    temperature.timestamp = timestamp;
+    temperature.teamID = teamID;
+    // temperature.name = "temperature";
+    temperature.temp = tempvalue;
+    // temperature.unit = "°C";
+
+    console.log(`temp : ${tempvalue}`);        // Server Debugger (Payload)
 
     // // :: Humidity
     // humidvalue = (parseInt(payload.slice(20, 22), 16) * 0.5).toFixed(2);
