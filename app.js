@@ -140,7 +140,7 @@ app.post("/receiveData", (req, res) => {
     let digitaloutput = new Digitaloutput();
 
     devEUI = JSON.stringify(req.body.DevEUI_uplink.DevEUI);                                 // DevEUI
-    teamID = devEUI[devEUI.length - 1] + devEUI[devEUI.length];         // Team ID 
+    teamID = devEUI[devEUI.length - 3] + devEUI[devEUI.length - 2];         // Team ID 
     payload = JSON.stringify(req.body.DevEUI_uplink.payload_hex);                           // Payload
 
     // payload2 = req.body.DevEUI_uplink;
