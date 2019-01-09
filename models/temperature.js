@@ -3,7 +3,7 @@ let mongoose = require("mongoose");
 //Article Schema
 let temperatureSchema = mongoose.Schema({
   timestamp: {
-    type: Timestamp,
+    type: String,
     required: true
   },
   teamID: {
@@ -11,7 +11,7 @@ let temperatureSchema = mongoose.Schema({
     required: true
   },
   temp: {
-    type: Double,
+    type: Number,
     required: true
   }
 });
