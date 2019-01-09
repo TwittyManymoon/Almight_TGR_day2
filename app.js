@@ -180,7 +180,7 @@ app.post("/receiveData", (req, res) => {
     // temperature.name = "temperature";
     temperature.temp = tempvalue;
     // temperature.unit = "°C";
-
+    console.log(`timestamp : ${timestamp}`)
     console.log(`temp : ${tempvalue}`);        // Server Debugger (Payload)
     console.log(`tempnum : ${tempnum}`);
 
@@ -299,15 +299,15 @@ app.post("/receiveData", (req, res) => {
     //         res.redirect("/");
     //     }
     // });
-    // temperature.save(err => {
-    //     if (err) {
-    //         console.log(err);
-    //         return;
-    //     } else {
-    //         // console.log("temp saved");
-    //         // res.redirect("/");
-    //     }
-    // });
+    temperature.save(err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("temp saved");
+            // res.redirect("/");
+        }
+    });
     // humidity.save(err => {
     //     if (err) {
     //         console.log(err);
