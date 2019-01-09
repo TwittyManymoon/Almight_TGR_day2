@@ -91,15 +91,6 @@ db.on("error", err => {
 app.use(bodyparser.urlencoded({ entended: false }));
 app.use(bodyparser.json());
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
-
-app.get("/articles/add", (req, res) => {
-    res.render("add_article", {
-        title: "Add Article"
-    });
-});
-
 /*------------ Create API route : EDIT ------------*/
 
 // Test 1
@@ -151,11 +142,17 @@ app.post("/receiveData", (req, res) => {
     // devEUI = req.body.DevEUI_uplink.DevEUI;                                 // DevEUI
     // teamID = devEUI[devEUI.length - 2] + devEUI[devEUI.length - 1];         // Team ID 
     payload = req.body.DevEUI_uplink.payload_hex;                           // Payload
+    payload2 = req.body.DevEUI_uplink;
+    payload3 = req.body.DevEUI_uplink.payload;
     // timestamp = req.body.DevEUI_uplink.Time;                                // Timestamp
     // bbb = req.body;
     // console.log(`fucking data : ${teamID} = ${payload}`);        
-    console.log(`fucking data : ${payload}`);
-    console.log("abc");                       // Server Debugger (Payload)
+    console.log(`fucking data1 : ${payload}`);
+    console.log(`fucking data2 : ${payload2}`);
+    console.log(`fucking data3 : ${payload3}`);
+    console.log("abc");        // Server Debugger (Payload)
+
+
 
     // // :: Barometer
     // barovalue = (parseInt(payload.slice(4, 8), 16) * 0.1).toFixed(2);
