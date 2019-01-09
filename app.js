@@ -361,85 +361,85 @@ app.post("/receiveData", (req, res) => {
 
 // API - Barometer ; http://'IP'/api/pressure/teamID/records
 
-app.get("/api/almight/pressure/:teamIDbar/:recordsbar", (req, res) => {
+// app.get("/api/almight/pressure/:teamIDbar/:recordsbar", (req, res) => {
 
-    let teamID_bar = req.params.teamIDbar;
-    let records_bar = req.params.recordsbar;
+//     let teamID_bar = req.params.teamIDbar;
+//     let records_bar = req.params.recordsbar;
 
-    let barro_array = [];
+//     let barro_array = [];
 
-    // initialize promise
+//     // initialize promise
 
-    var promise_bar = new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve();
-        }, 1000);
-    });
+//     var promise_bar = new Promise(function (resolve, reject) {
+//         setTimeout(function () {
+//             resolve();
+//         }, 1000);
+//     });
 
-    // async function
+//     // async function
 
-    if (records_bar == "all") {
-        Barometer.find({ teamID: teamID_bar }, (err, value) => {
-            if (err) {
-                console.log(err);
-            } else {
+//     if (records_bar == "all") {
+//         Barometer.find({ teamID: teamID_bar }, (err, value) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
 
-                for (let i = 0; i < value.length; i++) {
-                    console.log(`
-      timestamp : ${value[i].timestamp};
-      pressure : ${value[i].value}
-      `);
-                    promise_bar.then(function () {
-                        barro_array.push(value[i].value);
-                        console.log(barro_array);
+//                 for (let i = 0; i < value.length; i++) {
+//                     console.log(`
+//       timestamp : ${value[i].timestamp};
+//       pressure : ${value[i].value}
+//       `);
+//                     promise_bar.then(function () {
+//                         barro_array.push(value[i].value);
+//                         console.log(barro_array);
 
-                    })
+//                     })
 
-                        .then(function () {
-                            res.send(`
-          pressure : ${barro_array}
-          `);
-                        });
-                }
-            }
-        });
-    }
+//                         .then(function () {
+//                             res.send(`
+//           pressure : ${barro_array}
+//           `);
+//                         });
+//                 }
+//             }
+//         });
+//     }
 
-    else {
-        records_bar = parseInt(records_bar, 10);
-        Barometer.find({ teamID: teamID_bar }, (err, value) => {
-            if (err) {
-                console.log("bobo");
-            } else {
+//     else {
+//         records_bar = parseInt(records_bar, 10);
+//         Barometer.find({ teamID: teamID_bar }, (err, value) => {
+//             if (err) {
+//                 console.log("bobo");
+//             } else {
 
-                for (let i = (value.length - 1); i > ((value.length) - records_bar) - 1; i--) { //wtf
-                    console.log(`
-      timestamp : ${value[i].timestamp};
-      pressure : ${value[i].value}
-      `);
-                    promise_bar.then(function () {
-                        barro_array.push(value[i].value);
-                        console.log(barro_array);
+//                 for (let i = (value.length - 1); i > ((value.length) - records_bar) - 1; i--) { //wtf
+//                     console.log(`
+//       timestamp : ${value[i].timestamp};
+//       pressure : ${value[i].value}
+//       `);
+//                     promise_bar.then(function () {
+//                         barro_array.push(value[i].value);
+//                         console.log(barro_array);
 
-                    })
+//                     })
 
-                        .then(function () {
-                            res.send(`
-              pressure : ${barro_array}
-              `);
-                        });
-
-
-                }
-            }
-        });
-    }
+//                         .then(function () {
+//                             res.send(`
+//               pressure : ${barro_array}
+//               `);
+//                         });
 
 
+//                 }
+//             }
+//         });
+//     }
 
 
 
-});
+
+
+// });
 
 // /*------------ Start Server ------------*/
 
