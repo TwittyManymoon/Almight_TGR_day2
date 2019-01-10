@@ -639,6 +639,8 @@ app.post("/beaconsData/receiveData", (req, res) => {
 
     beacon.P_IN = inBvalue;
     beacon.P_OUT = outBvalue;
+    console.log(beacon.P_IN);
+    console.log(beacon.P_OUT);
 
     setTimeout(() => {
         inBvalue = 0;
