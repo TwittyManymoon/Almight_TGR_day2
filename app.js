@@ -49,8 +49,9 @@ const port = 8080;
 const app = express();
 
 // :: Bring in model
+let Sensors = require("./models/sensors");
+
 let Barometer = require("./models/barometer");
-let Temperature = require("./models/temperature");
 let Humidity = require("./models/humidity");
 let Accelerometer = require("./models/accelerometer");
 let Gyrometer = require("./models/gyrometer");
@@ -141,7 +142,7 @@ app.use(bodyparser.json());
 app.post("/receiveData", (req, res) => {
 
     let barometer = new Barometer();
-    let temperature = new Temperature();
+    let sensors = new Sensors();
     let humidity = new Humidity();
     let accelerometer = new Accelerometer();
     let gyrometer = new Gyrometer();
@@ -164,21 +165,21 @@ app.post("/receiveData", (req, res) => {
 
     // ------- Keep value ------
 
+    // :: Team ID & Timestamp
+    sensors.Timestamp = timestamp;
+    sensors.TeamID = teamID;
+
     // :: Temperature (Signed)
     tempvalue = parseInt(payload.slice(5, 9), 16);
-    tempnum = payload.slice(5, 9);
 
     if (tempvalue >= 32768) {
         tempvalue = ((65536 - tempvalue) * -0.1).toFixed(2);
     } else {
         tempvalue = (tempvalue * 0.1).toFixed(2);
     }
-    temperature.timestamp = timestamp;
 
-    temperature.teamID = teamID;
-    // temperature.name = "temperature";
-    temperature.temp = tempvalue;
-    // temperature.unit = "°C";
+    sensors.Temperature = tempvalue;
+
     console.log(`timestamp : ${timestamp}`)
     console.log(`temp : ${tempvalue}`);        // Server Debugger (Payload)
     // console.log(`tempnum : ${tempnum}`);
@@ -186,18 +187,18 @@ app.post("/receiveData", (req, res) => {
 
     // :: Humidity
     humidvalue = (parseInt(payload.slice(13, 15), 16) * 0.5).toFixed(2);
-    temperature.humid = humidvalue;
+    sensors.Humidity = humidvalue;
     console.log(`hunmid : ${humidvalue}`);
 
     // :: Person In
     invalue = (parseInt(payload.slice(19, 23), 16) * 1);
-    temperature.P_IN = invalue;
+    sensors.P_IN = invalue;
     console.log(`in : ${invalue}`);
 
     // :: Person In
     outvalue = (parseInt(payload.slice(27, 31), 16) * 1);
-    temperature.P_OUT = outvalue;
-    console.log(`in : ${outvalue}`);
+    sensors.P_OUT = outvalue;
+    console.log(`out : ${outvalue}`);
 
 
     // Save values from sensors to database
@@ -211,7 +212,7 @@ app.post("/receiveData", (req, res) => {
     //         res.redirect("/");
     //     }
     // });
-    temperature.save(err => {
+    sensors.save(err => {
         if (err) {
             console.log(err);
             return;
