@@ -630,7 +630,8 @@ app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 app.post("/beaconsData/receiveData", (req, res) => {
 
     let beacon = new Beacon();
-    let inBvalue, outBvalue = 1;
+    let inBvalue = 0;
+    let outBvalue = 0;
 
     beacon.Timestamp = new Date();
     status = req.body.events[0].beacon.type;         // Enter (P_IN) or Leave (P_Out)
