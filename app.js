@@ -627,6 +627,10 @@ app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 /* BEACON BEACON BEACON BEACON BEACON BEACON BEACON BEACON  */
 //////////////////////////////////////////////////////////////
 
+const Header = {
+    "Content-Type": 'application/json',
+    "Authorization": "Bearer {HRibRmD6OaubdC9n+eIEDXzR2E2idTyUUgQC/ZUyHoBxwoS9LLRDqGpGow3OtElm7DB0MlLHTswalwSIZQozOUdjuL5hB28D7rXjOwNuROi5rNQ9MwczFMmIfr73pQqQ8E10j9AvQmgZBg616wFa6gdB04t89/1O/w1cDnyilFU=}"
+}
 
 let inBvalue = 0;
 let outBvalue = 0;
@@ -679,6 +683,15 @@ app.post("/webhook", (req, res) => {
 
 });
 
+function curl(method, body) {
+    request.post({
+        url: 'https://api.line.me/v2/bot/message/' + method,
+        headers: Headers,
+        body: body
+    }, (err, res, body) => {
+        console.log('status = ' + res.statusCode)
+    })
+}
 
 
 /*------------ Start Server ------------*/
