@@ -304,6 +304,8 @@ app.post("/receiveData", (req, res) => {
 // 
 /*------------ API : Add 1 data by Team ID ------------*/
 app.post("/addData", (req, res) => {
+    let sensors = new Sensors();
+
     sensors.Timestamp = req.body.Timestamp;
     sensors.TeamID = req.body.TeamID;
     sensors.Temperature = req.body.Temperature;
@@ -311,7 +313,7 @@ app.post("/addData", (req, res) => {
     sensors.P_IN = req.body.P_IN;
     sensors.P_OUT = req.body.P_OUT;
 
-    sensors.save(err => {
+    Sensors.save(err => {
         if (err) {
             console.log(err);
             return;
