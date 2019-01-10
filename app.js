@@ -632,7 +632,7 @@ let inBvalue = 0;
 let outBvalue = 0;
 let beaconStatus = 0;
 
-app.post("https://1b40a476.ngrok.io", (req, res) => {
+app.post("/webhook", (req, res) => {
     // app.post("/beaconsData/receiveData", (req, res) => {
 
     let beacon = new Beacon();
