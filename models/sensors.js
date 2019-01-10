@@ -4,7 +4,7 @@ let mongoose = require("mongoose");
 //Article Schema
 let sensorSchema = mongoose.Schema({
   Timestamp: {
-    type: Date,
+    type: Number,
     // timestamps: true,
     // default: Date.now,
     required: true

@@ -548,8 +548,9 @@ app.get("/sensorsData/personOut/:teamID/:records", (req, res) => {
 
 app.post("/addData", (req, res) => {
     let sensors = new Sensors();
+    let time = new Date();
 
-    sensors.Timestamp = Date.now();
+    sensors.Timestamp = time.getTime();
     sensors.TeamID = req.body.TeamID;
     sensors.Temperature = req.body.Temperature;
     sensors.Humidity = req.body.Humidity;
