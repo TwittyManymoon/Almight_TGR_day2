@@ -307,7 +307,7 @@ app.post("/receiveData", (req, res) => {
 app.delete("/deleteData/:teamID", (req, res) => {
 
     let ID = req.params.teamID;
-    Sensors.find({ TeamID: ID }, (err, data) => {
+    Sensors.remove({ TeamID: ID }, (err, data) => {
         if (err) {
             console.log(err);
             return;
@@ -316,7 +316,7 @@ app.delete("/deleteData/:teamID", (req, res) => {
             res.send(data);
             console.log(data);
         }
-    }).remove();
+    });
 })
 
 /*------------ API : Show all data ------------*/
