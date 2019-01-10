@@ -19,7 +19,7 @@
 //                DI                 
 //                DO
 
-// Test : Add temperature, humidity, P_IN
+// Test : Add temperature, humidity, P_IN, P_OUT
 
 // : Developed by :
 // ----- Twitty Manymoon
@@ -462,6 +462,91 @@ app.get("/sensorsData/personIn/:teamID/:records", (req, res) => {
                         .then(function () {
                             res.send(`
                 person-in : ${PIN_array}
+                Timestamp : ${time_array}
+                `);
+                        });
+
+
+                }
+            }
+        });
+    }
+
+});
+
+/*------------ API : show all or some Person-OUT value ------------*/
+
+app.get("/sensorsData/personOut/:teamID/:records", (req, res) => {
+
+    let teamID = req.params.teamID;
+    let records = req.params.records;
+
+    let POUT_array = [];
+    let time_array = [];
+
+    // initialize promise
+
+    var promise_pout = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+    });
+
+    // async function
+
+    if (records == "all") {
+        Sensors.find({ TeamID: teamID }, (err, value) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+                for (let i = 0; i < value.length; i++) {
+                    console.log(`
+        timestamp : ${value[i].Timestamp}
+        person-out : ${value[i].P_OUT}
+        `);
+                    promise_pout
+                        .then(function () {
+                            POUT_array.push(value[i].P_OUT);
+                            time_array.push(value[i].Timestamp);
+                            // console.log(humid_array);
+
+                        })
+
+                        .then(function () {
+                            res.send(`
+            person-out : ${POUT_array}
+            timestamp : ${time_array}
+            `);
+                        });
+                }
+            }
+        });
+    }
+
+    else {
+        records = parseInt(records, 10);
+        Sensors.find({ TeamID: teamID }, (err, value) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+                for (let i = (value.length - 1); i > ((value.length) - records) - 1; i--) { //wtf
+                    console.log(`
+        Timestamp : ${value[i].Timestamp}
+        person-out : ${value[i].P_OUT}
+        `);
+                    promise_pin
+                        .then(function () {
+                            POUT_array.push(value[i].P_OUT);
+                            time_array.push(value[i].Timestamp);
+                            // console.log(humid_array);
+
+                        })
+
+                        .then(function () {
+                            res.send(`
+                person-out : ${POUT_array}
                 Timestamp : ${time_array}
                 `);
                         });
