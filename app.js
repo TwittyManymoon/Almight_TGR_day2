@@ -304,14 +304,14 @@ app.post("/receiveData", (req, res) => {
 
 app.get("/showData", (req, res) => {
 
-    db.sensors.find((err, data) => {
+    db.sensors.find({}, (err, data) => {
         if (err) {
             console.log(err);
             return;
         }
         else {
-            res.send(JSON.parse(data));
-            console.log(JSON.parse(data));
+            res.send(data);
+            console.log(data);
         }
     }
     )
