@@ -15,6 +15,10 @@ let beaconSchema = mongoose.Schema({
     P_OUT: {
         type: Number,
         required: true
+    },
+    Status: {
+        type: Number,
+        require: true
     }
 });
 

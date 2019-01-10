@@ -628,6 +628,7 @@ app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 //////////////////////////////////////////////////////////////
 let inBvalue = 0;
 let outBvalue = 0;
+let beaconStatus = 0;
 
 app.post("/beaconsData/receiveData", (req, res) => {
 
@@ -640,8 +641,16 @@ app.post("/beaconsData/receiveData", (req, res) => {
     if (status == "enter") { inBvalue += 1; }
     else if (status == "leave") { outBvalue += 1; }
 
+    // if person in - person out > 2 GTFO!  
+    if (inBvalue - outBvalue > 2) {
+        beaconStatus = 1;
+        console.log("Error : Person out exceeds the limitation (2)!");
+    }
+    else { beaconStatus = 0; }
+
     beacon.P_IN = inBvalue;
     beacon.P_OUT = outBvalue;
+    beacon.Status = beaconStatus;
 
     console.log(`body : ${JSON.stringify(req.body)}`);
     console.log(`status : ${status}`);
