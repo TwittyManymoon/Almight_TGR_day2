@@ -304,7 +304,7 @@ app.post("/receiveData", (req, res) => {
 
 app.get("/showData", (req, res) => {
 
-    db.sensors.find({}.toArray((err, data) => {
+    db.sensors.find({}((err, data) => {
         if (err) {
             console.log(err);
             return;
