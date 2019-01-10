@@ -17,6 +17,10 @@ let temperatureSchema = mongoose.Schema({
   temp: {
     type: Number,
     required: true
+  },
+  humid: {
+    type: Number,
+    required: true
   }
 });
 
