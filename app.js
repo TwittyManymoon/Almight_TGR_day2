@@ -536,7 +536,7 @@ app.get("/sensorsData/personOut/:teamID/:records", (req, res) => {
         Timestamp : ${value[i].Timestamp}
         person-out : ${value[i].P_OUT}
         `);
-                    promise_pin
+                    promise_pout
                         .then(function () {
                             POUT_array.push(value[i].P_OUT);
                             time_array.push(value[i].Timestamp);
