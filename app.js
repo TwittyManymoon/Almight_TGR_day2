@@ -59,7 +59,8 @@ let Digitalinput = require("./models/digitalinput");
 let Digitaloutput = require("./models/digitaloutput");
 
 var payload, teamID, timestamp, barovalue, tempvalue, humidvalue, accexvalue, acceyvalue, accezvalue,
-    gyroxvalue, gyroyvalue, gyrozvalue, magvalue, digitalinvalue, digitaloutvalue;
+    gyroxvalue, gyroyvalue, gyrozvalue, magvalue, digitalinvalue, digitaloutvalue,
+    invalue, outvalue;
 
 /*------------ Database setup : EDIT ------------*/
 
@@ -188,8 +189,15 @@ app.post("/receiveData", (req, res) => {
     temperature.humid = humidvalue;
     console.log(`hunmid : ${humidvalue}`);
 
-    // Person In
+    // :: Person In
+    invalue = (parseInt(payload.slice(19, 23), 16) * 1);
+    temperature.P_IN = invalue;
+    console.log(`in : ${invalue}`);
 
+    // :: Person In
+    outvalue = (parseInt(payload.slice(27, 31), 16) * 1);
+    temperature.P_IN = outvalue;
+    console.log(`in : ${outvalue}`);
 
 
     // Save values from sensors to database
