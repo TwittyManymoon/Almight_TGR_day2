@@ -219,7 +219,7 @@ app.post("/receiveData", (req, res) => {
 
 // API - Barometer ; http://'IP'/api/pressure/teamID/records
 
-/*------------ API : Add 1 data by Team ID ------------*/
+/*------------ API : show all or some temperature value ------------*/
 
 app.get("/sensorsData/temperature/:teamID/:records", (req, res) => {
 
@@ -298,6 +298,88 @@ app.get("/sensorsData/temperature/:teamID/:records", (req, res) => {
     }
 
 });
+
+/*------------ API : show all or some temperature value ------------*/
+
+app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
+
+    let teamID = req.params.teamID;
+    let records = req.params.records;
+
+    let humid_array = [];
+
+    // initialize promise
+
+    var promise_humid = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+    });
+
+    // async function
+
+    if (records == "all") {
+        Sensors.find({ TeamID: teamID }, (err, value) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+                for (let i = 0; i < value.length; i++) {
+                    console.log(`
+        timestamp : ${value[i].Timestamp}
+        Humidity : ${value[i].Humidity}
+        `);
+                    promise_humid
+                        .then(function () {
+                            humid_array.push(value[i].Humidity);
+                            console.log(humid_array);
+
+                        })
+
+                        .then(function () {
+                            res.send(`
+            Humidity : ${humid_array}
+            `);
+                        });
+                }
+            }
+        });
+    }
+
+    else {
+        records = parseInt(records, 10);
+        Sensors.find({ TeamID: teamID }, (err, value) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+                for (let i = (value.length - 1); i > ((value.length) - records) - 1; i--) { //wtf
+                    console.log(`
+        timestamp : ${value[i].Timestamp}
+        Humidity : ${value[i].Humidity}
+        `);
+                    promise_humid
+                        .then(function () {
+                            humid_array.push(value[i].Humidity);
+                            console.log(humid_array);
+
+                        })
+
+                        .then(function () {
+                            res.send(`
+                Humidity : ${humid_array}
+                `);
+                        });
+
+
+                }
+            }
+        });
+    }
+
+});
+
+
 
 /*------------ API : Add 1 data by Team ID ------------*/
 app.post("/addData", (req, res) => {
