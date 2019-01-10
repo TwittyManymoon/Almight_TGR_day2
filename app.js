@@ -304,7 +304,7 @@ app.post("/receiveData", (req, res) => {
 
 app.get("/showData", (req, res) => {
 
-    db.sensors.find({}((err, data) => {
+    db.sensors.find((err, data) => {
         if (err) {
             console.log(err);
             return;
@@ -313,7 +313,7 @@ app.get("/showData", (req, res) => {
             res.send(data);
             console.log(data);
         }
-    })
+    }
     )
 
 });
