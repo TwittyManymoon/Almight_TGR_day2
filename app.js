@@ -19,15 +19,7 @@
 //                DI                 
 //                DO
 
-// There are 7 parts
-
-//   1. Initialization
-//   2. Database Setup
-//   3. Create Middleware
-//   4. Create API Route
-//   5. Main : handle value from sensors***
-//   6. Save values from sensors to database
-//   7. Start Server
+// Workable! : Modified 1
 
 // : Developed by :
 // ----- Twitty Manymoon
@@ -227,81 +219,91 @@ app.post("/receiveData", (req, res) => {
 
 // API - Barometer ; http://'IP'/api/pressure/teamID/records
 
-// app.get("/api/almight/pressure/:teamIDbar/:recordsbar", (req, res) => {
+/*------------ API : Add 1 data by Team ID ------------*/
 
-//     let teamID_bar = req.params.teamIDbar;
-//     let records_bar = req.params.recordsbar;
+app.get("/sensorsData/temperature/:teamID/:records", (req, res) => {
 
-//     let barro_array = [];
+    let teamID = req.params.teamID;
+    let records = req.params.records;
 
-//     // initialize promise
+    let temp_array = [];
 
-//     var promise_bar = new Promise(function (resolve, reject) {
-//         setTimeout(function () {
-//             resolve();
-//         }, 1000);
-//     });
+    // initialize promise
 
-//     // async function
+    var promise_temp = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+    });
 
-//     if (records_bar == "all") {
-//         Barometer.find({ teamID: teamID_bar }, (err, value) => {
-//             if (err) {
-//                 console.log(err);
-//             } else {
+    // async function
 
-//                 for (let i = 0; i < value.length; i++) {
-//                     console.log(`
-//       timestamp : ${value[i].timestamp};
-//       pressure : ${value[i].value}
-//       `);
-//                     promise_bar.then(function () {
-//                         barro_array.push(value[i].value);
-//                         console.log(barro_array);
+    if (records == "all") {
+        Sensors.find({ TeamID: teamID }, (err, value) => {
+            if (err) {
+                console.log(err);
+            } else {
 
-//                     })
+                for (let i = 0; i < value.length; i++) {
+                    console.log(`
+        timestamp : ${value[i].Timestamp}
+        temperature : ${value[i].Temperature}
+        `);
+                    promise_temp
+                        .then(function () {
+                            temp_array.push(value[i].Temperature);
+                            console.log(temp_array);
 
-//                         .then(function () {
-//                             res.send(`
-//           pressure : ${barro_array}
-//           `);
-//                         });
-//                 }
-//             }
-//         });
-//     }
+                        })
 
-//     else {
-//         records_bar = parseInt(records_bar, 10);
-//         Barometer.find({ teamID: teamID_bar }, (err, value) => {
-//             if (err) {
-//                 console.log("bobo");
-//             } else {
+                        .then(function () {
+                            res.send(`
+            temperature : ${temp_array}
+            `);
+                        });
+                }
+            }
+        });
+    }
 
-//                 for (let i = (value.length - 1); i > ((value.length) - records_bar) - 1; i--) { //wtf
-//                     console.log(`
-//       timestamp : ${value[i].timestamp};
-//       pressure : ${value[i].value}
-//       `);
-//                     promise_bar.then(function () {
-//                         barro_array.push(value[i].value);
-//                         console.log(barro_array);
+    else {
+        records = parseInt(records, 10);
+        Sensors.find({ TeamID: teamID }, (err, value) => {
+            if (err) {
+                console.log(err);
+            } else {
 
-//                     })
+                for (let i = (value.length - 1); i > ((value.length) - records) - 1; i--) { //wtf
+                    console.log(`
+        timestamp : ${value[i].Timestamp}
+        temperature : ${value[i].Temperature}
+        `);
+                    promise_temp
+                        .then(function () {
+                            temp_array.push(value[i].Temperature);
+                            console.log(temp_array);
 
-//                         .then(function () {
-//                             res.send(`
-//               pressure : ${barro_array}
-//               `);
-//                         });
+                        })
+
+                        .then(function () {
+                            res.send(`
+                temperature : ${temp_array}
+                `);
+                        });
 
 
-//                 }
-//             }
-//         });
-//     }
+                }
+            }
+        });
+    }
 
-// 
+
+
+
+
+});
+
+
 /*------------ API : Add 1 data by Team ID ------------*/
 app.post("/addData", (req, res) => {
     let sensors = new Sensors();
@@ -359,6 +361,21 @@ app.get("/showData", (req, res) => {
 
 });
 
+/*------------ API : Edit temperature followed by TeamID ------------*/
+app.delete("/deleteData/:teamID", (req, res) => {
+
+    let ID = req.params.teamID;
+    Sensors.remove({ TeamID: ID }, (err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        else {
+            res.send(data);
+            console.log(data);
+        }
+    });
+})
 
 
 
