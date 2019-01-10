@@ -628,6 +628,7 @@ app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 //////////////////////////////////////////////////////////////
 let inBvalue = 0;
 let outBvalue = 0;
+
 app.post("/beaconsData/receiveData", (req, res) => {
 
     let beacon = new Beacon();
