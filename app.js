@@ -634,16 +634,16 @@ app.post("/beaconsData/receiveData", (req, res) => {
     beacon.Timestamp = new Date();
     status = req.body.events[0].beacon.type;         // Enter (P_IN) or Leave (P_Out)
 
-    if (status == "enter") { inBvalue += 1; }
-    else if (status == "leave") { outBvalue += 1; }
+    if (status == "enter") { inBvalue = inBvalue + 1; }
+    else if (status == "leave") { outBvalue = outBvalue + 1; }
 
     beacon.P_IN = inBvalue;
     beacon.P_OUT = outBvalue;
-    console.log(`body : ${req.body}`);
+    console.log(`body : ${JSON.stringify(req.body)}`);
     console.log(`status : ${status}`);
-    console.log(`event[0] : ${req.body.events[0]}`);
-    console.log(inBvalue);
-    console.log(outBvalue);
+    console.log(`event[0] : ${JSON.stringify(req.body.events[0])}`);
+    console.log(`in : ${inBvalue}`);
+    console.log(`out : ${outBvalue}`);
 
     setTimeout(() => {
         inBvalue = 0;
