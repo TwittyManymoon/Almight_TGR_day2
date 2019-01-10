@@ -6,8 +6,9 @@ var SchemaTypes = mongoose.Schema.Types;
 //Article Schema
 let temperatureSchema = mongoose.Schema({
   timestamp: {
-    type: String,
-    timestamps: true,
+    type: Date,
+    default: Date.now,
+    // timestamps: true,
     required: true
   },
   teamID: {
