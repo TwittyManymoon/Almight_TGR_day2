@@ -302,8 +302,28 @@ app.post("/receiveData", (req, res) => {
 //     }
 
 // 
+/*------------ API : Add 1 data by Team ID ------------*/
+app.post("/addData", (req, res) => {
+    sensors.Timestamp = req.body.Timestamp;
+    sensors.TeamID = req.body.TeamID;
+    sensors.Temperature = req.body.Temperature;
+    sensors.Humidity = req.body.Humidity;
+    sensors.P_IN = req.body.P_IN;
+    sensors.P_OUT = req.body.P_OUT;
 
-/*------------ API : Show all data ------------*/
+    sensors.save(err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("all saved");
+            // res.redirect("/");
+        }
+    });
+})
+
+
+/*------------ API : Delete all data followed by TeamID ------------*/
 app.delete("/deleteData/:teamID", (req, res) => {
 
     let ID = req.params.teamID;
