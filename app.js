@@ -72,7 +72,7 @@ var payload, teamID, timestamp, barovalue, tempvalue, humidvalue, accexvalue, ac
 // :: MongoDB Localhost
 // mongoose.connect("mongodb://202.139.192.89/TGR_2019_Almight")
 var option = { auth: { user: "Twitty", password: "thigmal1234" } };
-mongoose.connect("mongodb://Twitty:thigmal1234@202.139.192.89/hwData", { useNewUrlParser: true });
+mongoose.connect("mongodb://Twitty:thigmal1234@202.139.192.89/Almight_Integration", { useNewUrlParser: true });
 
 
 let db = mongoose.connection;
