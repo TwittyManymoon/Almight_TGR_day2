@@ -639,6 +639,9 @@ app.post("/beaconsData/receiveData", (req, res) => {
 
     beacon.P_IN = inBvalue;
     beacon.P_OUT = outBvalue;
+    console.log(`body : ${req.body}`);
+    console.log(`status : ${status}`);
+    console.log(`event[0] : ${req.body.events[0]}`);
     console.log(inBvalue);
     console.log(outBvalue);
 
