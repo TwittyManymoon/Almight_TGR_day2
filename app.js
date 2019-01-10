@@ -128,7 +128,7 @@ app.use(bodyparser.json());
 
 /*------------ API : Main : Get data from sensors, send to MongoDB ------------*/
 
-app.post("/receiveData", (req, res) => {
+app.post("/sensorsData/receiveData", (req, res) => {
 
     let barometer = new Barometer();
     let sensors = new Sensors();
@@ -155,7 +155,7 @@ app.post("/receiveData", (req, res) => {
     // ------- Keep value ------
 
     // :: Team ID & Timestamp
-    sensors.Timestamp = Date.now();
+    sensors.Timestamp = new Date();
     sensors.TeamID = teamID;
 
     // :: Temperature (Signed)
@@ -546,7 +546,7 @@ app.get("/sensorsData/personOut/:teamID/:records", (req, res) => {
 
 /*------------ API : Add 1 data by Team ID ------------*/
 
-app.post("/addData", (req, res) => {
+app.post("/sensorsData/addData", (req, res) => {
     let sensors = new Sensors();
 
     sensors.Timestamp = new Date();
@@ -569,7 +569,7 @@ app.post("/addData", (req, res) => {
 
 /*------------ API : Delete all data followed by TeamID ------------*/
 
-app.delete("/deleteData/:teamID", (req, res) => {
+app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 
     let ID = req.params.teamID;
     Sensors.remove({ TeamID: ID }, (err, data) => {
@@ -586,7 +586,7 @@ app.delete("/deleteData/:teamID", (req, res) => {
 
 /*------------ API : Show all data ------------*/
 
-app.get("/showData", (req, res) => {
+app.get("/sensorsData/showData", (req, res) => {
 
     Sensors.find({}, (err, data) => {
         if (err) {
@@ -603,7 +603,7 @@ app.get("/showData", (req, res) => {
 });
 
 /*------------ API : Edit temperature followed by TeamID ------------*/
-app.delete("/deleteData/:teamID", (req, res) => {
+app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 
     let ID = req.params.teamID;
     Sensors.remove({ TeamID: ID }, (err, data) => {
