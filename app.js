@@ -137,7 +137,8 @@ app.use(bodyparser.json());
 //                DO                 :     ${digitaloutvalue}\n `);
 
 // });
-// Main : handle values from sensors
+
+/*------------ API : Main : Get data from sensors, send to MongoDB ------------*/
 
 app.post("/receiveData", (req, res) => {
 
@@ -300,7 +301,25 @@ app.post("/receiveData", (req, res) => {
 //         });
 //     }
 
+// 
 
+/*------------ API : Show all data ------------*/
+app.delete("/deleteData/:teamID", (req, res) => {
+
+    let ID = req.params.teamID;
+    Sensors.find({ TeamID: ID }, (err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        else {
+            res.send(data);
+            console.log(data);
+        }
+    }).remove();
+})
+
+/*------------ API : Show all data ------------*/
 
 app.get("/showData", (req, res) => {
 
@@ -323,7 +342,7 @@ app.get("/showData", (req, res) => {
 
 // });
 
-// /*------------ Start Server ------------*/
+/*------------ Start Server ------------*/
 
 app.listen(8080, () => {
     console.log("Server is started on port 8080");
