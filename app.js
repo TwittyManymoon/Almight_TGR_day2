@@ -311,6 +311,7 @@ app.get("/showData", (req, res) => {
         }
         else {
             res.send(data);
+            console.log(data);
         }
     })
     )
