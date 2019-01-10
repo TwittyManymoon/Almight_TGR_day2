@@ -310,8 +310,8 @@ app.get("/showData", (req, res) => {
             return;
         }
         else {
-            res.send(data);
-            console.log(data);
+            res.send(JSON.parse(data));
+            console.log(JSON.parse(data));
         }
     }
     )
