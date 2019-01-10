@@ -640,7 +640,7 @@ app.post("/beaconsData/receiveData", (req, res) => {
             inBvalue += 1;
 
 
-        }, 1000)
+        }, 5000)
         setTimeout(() => {
             beacon.P_IN = inBvalue;
             beacon.P_OUT = outBvalue;
@@ -654,7 +654,7 @@ app.post("/beaconsData/receiveData", (req, res) => {
                 }
             });
 
-        }, 2000)
+        }, 10000)
     }
     else if (status == "leave") { outBvalue += 1; }
 
@@ -666,10 +666,10 @@ app.post("/beaconsData/receiveData", (req, res) => {
     console.log(`in : ${inBvalue}`);
     console.log(`out : ${outBvalue}`);
 
-    setTimeout(() => {
-        inBvalue = 0;
-        outBvalue = 0;
-    }, 60000)
+    // setTimeout(() => {
+    //     inBvalue = 0;
+    //     outBvalue = 0;
+    // }, 60000)
 
     // beacon.save((err, data) => {
     //     if (err) {
