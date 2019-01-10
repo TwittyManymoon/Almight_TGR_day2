@@ -640,6 +640,9 @@ app.post("/beaconsData/receiveData", (req, res) => {
             inBvalue += 1;
             beacon.P_IN = inBvalue;
             beacon.P_OUT = outBvalue;
+
+        }, 1000)
+        setTimeout(() => {
             beacon.save((err, data) => {
                 if (err) {
                     console.log(err);
@@ -649,7 +652,8 @@ app.post("/beaconsData/receiveData", (req, res) => {
                     res.send(data);
                 }
             });
-        }, 1000)
+
+        }, 2000)
     }
     else if (status == "leave") { outBvalue += 1; }
 
