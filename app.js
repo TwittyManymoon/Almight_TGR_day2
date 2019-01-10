@@ -19,7 +19,7 @@
 //                DI                 
 //                DO
 
-// Workable! : Modified 2 add temp, hum
+// Test : Add temperature, humidity, P_IN
 
 // : Developed by :
 // ----- Twitty Manymoon
@@ -332,7 +332,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
                 for (let i = 0; i < value.length; i++) {
                     console.log(`
-        timestamp : ${value[i].Timestamp}\n
+        timestamp : ${value[i].Timestamp}
         Humidity : ${value[i].Humidity}
         `);
                     promise_humid
@@ -345,7 +345,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
                         .then(function () {
                             res.send(`
-            Humidity : ${humid_array}\n
+            Humidity : ${humid_array}
             Timestamp : ${time_array}
             `);
                         });
@@ -363,7 +363,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
                 for (let i = (value.length - 1); i > ((value.length) - records) - 1; i--) { //wtf
                     console.log(`
-        timestamp : ${value[i].Timestamp}\n
+        timestamp : ${value[i].Timestamp}
         Humidity : ${value[i].Humidity}
         `);
                     promise_humid
@@ -376,7 +376,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
                         .then(function () {
                             res.send(`
-                Humidity : ${humid_array}\n
+                Humidity : ${humid_array}
                 Timestamp : ${time_array}
                 `);
                         });
@@ -389,6 +389,90 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
 });
 
+/*------------ API : show all or some Person-IN value ------------*/
+
+app.get("/sensorsData/personIn/:teamID/:records", (req, res) => {
+
+    let teamID = req.params.teamID;
+    let records = req.params.records;
+
+    let PIN_array = [];
+    let time_array = [];
+
+    // initialize promise
+
+    var promise_pin = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+    });
+
+    // async function
+
+    if (records == "all") {
+        Sensors.find({ TeamID: teamID }, (err, value) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+                for (let i = 0; i < value.length; i++) {
+                    console.log(`
+        timestamp : ${value[i].Timestamp}
+        person-in : ${value[i].P_IN}
+        `);
+                    promise_pin
+                        .then(function () {
+                            PIN_array.push(value[i].P_IN);
+                            time_array.push(value[i].Timestamp);
+                            // console.log(humid_array);
+
+                        })
+
+                        .then(function () {
+                            res.send(`
+            person-in : ${PIN_array}
+            timestamp : ${time_array}
+            `);
+                        });
+                }
+            }
+        });
+    }
+
+    else {
+        records = parseInt(records, 10);
+        Sensors.find({ TeamID: teamID }, (err, value) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+                for (let i = (value.length - 1); i > ((value.length) - records) - 1; i--) { //wtf
+                    console.log(`
+        Timestamp : ${value[i].Timestamp}
+        person-in : ${value[i].P_IN}
+        `);
+                    promise_pin
+                        .then(function () {
+                            PIN_array.push(value[i].P_IN);
+                            time_array.push(value[i].Timestamp);
+                            // console.log(humid_array);
+
+                        })
+
+                        .then(function () {
+                            res.send(`
+                person-in : ${PIN_array}
+                Timestamp : ${time_array}
+                `);
+                        });
+
+
+                }
+            }
+        });
+    }
+
+});
 
 /*------------ API : Add 1 data by Team ID ------------*/
 
@@ -413,7 +497,6 @@ app.post("/addData", (req, res) => {
     });
 })
 
-
 /*------------ API : Delete all data followed by TeamID ------------*/
 
 app.delete("/deleteData/:teamID", (req, res) => {
@@ -430,7 +513,6 @@ app.delete("/deleteData/:teamID", (req, res) => {
         }
     });
 })
-
 
 /*------------ API : Show all data ------------*/
 
