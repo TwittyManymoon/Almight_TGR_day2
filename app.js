@@ -217,7 +217,7 @@ app.post("/receiveData", (req, res) => {
 
 });
 
-// API - Barometer ; http://'IP'/api/pressure/teamID/records
+
 
 /*------------ API : show all or some temperature value ------------*/
 
@@ -304,7 +304,7 @@ app.get("/sensorsData/temperature/:teamID/:records", (req, res) => {
 
 });
 
-/*------------ API : show all or some temperature value ------------*/
+/*------------ API : show all or some humidity value ------------*/
 
 app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
@@ -332,7 +332,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
                 for (let i = 0; i < value.length; i++) {
                     console.log(`
-        timestamp : ${value[i].Timestamp}
+        timestamp : ${value[i].Timestamp}\n
         Humidity : ${value[i].Humidity}
         `);
                     promise_humid
@@ -345,7 +345,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
                         .then(function () {
                             res.send(`
-            Humidity : ${humid_array}
+            Humidity : ${humid_array}\n
             Timestamp : ${time_array}
             `);
                         });
@@ -363,7 +363,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
                 for (let i = (value.length - 1); i > ((value.length) - records) - 1; i--) { //wtf
                     console.log(`
-        timestamp : ${value[i].Timestamp}
+        timestamp : ${value[i].Timestamp}\n
         Humidity : ${value[i].Humidity}
         `);
                     promise_humid
@@ -376,7 +376,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 
                         .then(function () {
                             res.send(`
-                Humidity : ${humid_array}
+                Humidity : ${humid_array}\n
                 Timestamp : ${time_array}
                 `);
                         });
@@ -390,8 +390,8 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
 });
 
 
-
 /*------------ API : Add 1 data by Team ID ------------*/
+
 app.post("/addData", (req, res) => {
     let sensors = new Sensors();
 
@@ -415,6 +415,7 @@ app.post("/addData", (req, res) => {
 
 
 /*------------ API : Delete all data followed by TeamID ------------*/
+
 app.delete("/deleteData/:teamID", (req, res) => {
 
     let ID = req.params.teamID;
@@ -429,6 +430,7 @@ app.delete("/deleteData/:teamID", (req, res) => {
         }
     });
 })
+
 
 /*------------ API : Show all data ------------*/
 
