@@ -345,7 +345,7 @@ app.delete("/deleteData/:teamID", (req, res) => {
 
 app.get("/showData", (req, res) => {
 
-    sensors.find({}, (err, data) => {
+    Sensors.find({}, (err, data) => {
         if (err) {
             console.log(err);
             return;
