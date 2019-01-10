@@ -683,10 +683,21 @@ app.post("/webhook", (req, res) => {
 
 });
 
+function reply(reply_token, msg) {
+    let body = JSON.stringify({
+        replyToken = reply_token,
+        messages: [{
+            type: 'text',
+            text: msg
+        }]
+    })
+    curl('reply', body);
+}
+
 function curl(method, body) {
     request.post({
         url: 'https://api.line.me/v2/bot/message/' + method,
-        headers: Headers,
+        headers: Header,
         body: body
     }, (err, res, body) => {
         console.log('status = ' + res.statusCode)
