@@ -4,7 +4,7 @@ let mongoose = require("mongoose");
 //Article Schema
 let beaconSchema = mongoose.Schema({
     Timestamp: {
-        type: String,
+        type: Date,
         // timestamps: true,
         required: true
     },

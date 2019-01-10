@@ -42,6 +42,7 @@ const app = express();
 
 // :: Bring in model
 let Sensors = require("./models/sensors");
+let Beacon = require("./models/beacon");
 
 let Barometer = require("./models/barometer");
 let Humidity = require("./models/humidity");
@@ -624,19 +625,35 @@ app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 /* BEACON BEACON BEACON BEACON BEACON BEACON BEACON BEACON  */
 //////////////////////////////////////////////////////////////
 
-// app.post("/beaconsData/receiveData", (req, res) => {
+app.post("/beaconsData/receiveData", (req, res) => {
 
-//     let beacon = new Beacon();
+    let beacon = new Beacon();
 
-//     time
-//     status = req.body.events[0].source.beacon.type;         // Enter (P_IN) or Leave (P_Out)
+    beacon.Timestamp = new Date();
+    status = req.body.events[0].beacon.type;         // Enter (P_IN) or Leave (P_Out)
 
-//     if(status == "enter"){inBvalue += 1;}
-//     else if(status == "leave"){outBvalue += 1;} 
+    if (status == "enter") { inBvalue += 1; }
+    else if (status == "leave") { outBvalue += 1; }
 
+    beacon.P_IN = inBvalue;
+    beacon.P_OUT = outBvalue;
 
+    setTimeout(() => {
+        inBvalue = 0;
+        outBvalue = 0;
+    }, 60000)
 
-// });
+    beacon.save((err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("all saved");
+            res.send(data);
+        }
+    });
+
+});
 
 
 
