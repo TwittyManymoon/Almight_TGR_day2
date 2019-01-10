@@ -19,7 +19,7 @@
 //                DI                 
 //                DO
 
-// Workable! : Modified 1
+// Workable! : Modified 2 add temp, hum
 
 // : Developed by :
 // ----- Twitty Manymoon
