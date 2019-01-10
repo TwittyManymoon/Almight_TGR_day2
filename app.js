@@ -196,7 +196,7 @@ app.post("/receiveData", (req, res) => {
 
     // :: Person In
     outvalue = (parseInt(payload.slice(27, 31), 16) * 1);
-    temperature.P_IN = outvalue;
+    temperature.P_OUT = outvalue;
     console.log(`in : ${outvalue}`);
 
 
