@@ -1,5 +1,5 @@
 let mongoose = require("mongoose");
-require('mongoose-double')(mongoose);
+// require('mongoose-double')(mongoose);
 
 var SchemaTypes = mongoose.Schema.Types;
 
@@ -15,7 +15,7 @@ let temperatureSchema = mongoose.Schema({
     required: true
   },
   temp: {
-    type: SchemaTypes.Double,
+    type: Number,
     required: true
   }
 });
