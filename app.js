@@ -56,7 +56,7 @@ var payload, teamID, timestamp, barovalue, tempvalue, humidvalue, accexvalue, ac
     gyroxvalue, gyroyvalue, gyrozvalue, magvalue, digitalinvalue, digitaloutvalue,
     invalue, outvalue;
 
-var inBvalue, outBvalue = 0;
+
 
 /*------------ Database setup : EDIT ------------*/
 
@@ -630,12 +630,13 @@ app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 app.post("/beaconsData/receiveData", (req, res) => {
 
     let beacon = new Beacon();
+    let inBvalue, outBvalue = 0;
 
     beacon.Timestamp = new Date();
     status = req.body.events[0].beacon.type;         // Enter (P_IN) or Leave (P_Out)
 
-    if (status == "enter") { inBvalue = 30; }
-    else if (status == "leave") { outBvalue = 20; }
+    if (status == "enter") { inBvalue++; }
+    else if (status == "leave") { outBvalue++; }
 
     beacon.P_IN = inBvalue;
     beacon.P_OUT = outBvalue;
