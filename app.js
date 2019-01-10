@@ -646,10 +646,10 @@ app.post("/beaconsData/receiveData", (req, res) => {
     console.log(`in : ${inBvalue}`);
     console.log(`out : ${outBvalue}`);
 
-    setTimeout(() => {
-        inBvalue = 0;
-        outBvalue = 0;
-    }, 60000)
+    // setTimeout(() => {
+    //     inBvalue = 0;
+    //     outBvalue = 0;
+    // }, 60000)
 
     beacon.save((err, data) => {
         if (err) {
