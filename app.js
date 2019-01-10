@@ -313,7 +313,7 @@ app.post("/addData", (req, res) => {
     sensors.P_IN = req.body.P_IN;
     sensors.P_OUT = req.body.P_OUT;
 
-    Sensors.save(err => {
+    sensors.save(err => {
         if (err) {
             console.log(err);
             return;
