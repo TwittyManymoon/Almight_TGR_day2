@@ -313,13 +313,13 @@ app.post("/addData", (req, res) => {
     sensors.P_IN = req.body.P_IN;
     sensors.P_OUT = req.body.P_OUT;
 
-    sensors.save(err => {
+    sensors.save((err, data) => {
         if (err) {
             console.log(err);
             return;
         } else {
             console.log("all saved");
-            // res.redirect("/");
+            res.send(data);
         }
     });
 })
@@ -345,7 +345,7 @@ app.delete("/deleteData/:teamID", (req, res) => {
 
 app.get("/showData", (req, res) => {
 
-    Sensors.find({}, (err, data) => {
+    sensors.find({}, (err, data) => {
         if (err) {
             console.log(err);
             return;
