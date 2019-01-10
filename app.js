@@ -307,6 +307,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
     let records = req.params.records;
 
     let humid_array = [];
+    let time_array = [];
 
     // initialize promise
 
@@ -332,6 +333,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
                     promise_humid
                         .then(function () {
                             humid_array.push(value[i].Humidity);
+                            time_array.push(value[i].Timestamp);
                             console.log(humid_array);
 
                         })
@@ -339,6 +341,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
                         .then(function () {
                             res.send(`
             Humidity : ${humid_array}
+            Timestamp : ${time_array}
             `);
                         });
                 }
@@ -361,6 +364,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
                     promise_humid
                         .then(function () {
                             humid_array.push(value[i].Humidity);
+                            time_array.push(value[i].Timestamp);
                             console.log(humid_array);
 
                         })
@@ -368,6 +372,7 @@ app.get("/sensorsData/humidity/:teamID/:records", (req, res) => {
                         .then(function () {
                             res.send(`
                 Humidity : ${humid_array}
+                Timestamp : ${time_array}
                 `);
                         });
 
