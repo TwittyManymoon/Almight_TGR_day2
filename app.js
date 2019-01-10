@@ -53,7 +53,7 @@ let Digitaloutput = require("./models/digitaloutput");
 
 var payload, teamID, timestamp, barovalue, tempvalue, humidvalue, accexvalue, acceyvalue, accezvalue,
     gyroxvalue, gyroyvalue, gyrozvalue, magvalue, digitalinvalue, digitaloutvalue,
-    invalue, outvalue;
+    invalue, outvalue, inBvalue, outBvalue;
 
 /*------------ Database setup : EDIT ------------*/
 
@@ -99,17 +99,7 @@ app.use(bodyparser.json());
 //     res.send(`Welcome motherfucker, your motherfucking data: ${payload}`);
 // });
 
-// // Dashboard
-// app.get('/showData', (req, res) => {
-//     res.send(`Dashboard\n
-//                Timestamp          :     ${timestamp}\n
-//                Team ID            :     ${teamID}\n
-//                Temperature        :     ${tempvalue}  Celsius\n
-//  `);
-
-// });
-
-// // Dashboard
+// Test Dashboard
 // app.get('/showData', (req, res) => {
 //     res.send(`Dashboard\n
 //                Raw Data           :     ${payload}\n
@@ -129,6 +119,12 @@ app.use(bodyparser.json());
 //                DO                 :     ${digitaloutvalue}\n `);
 
 // });
+
+//////////////////////////////////////////////////////////////
+/* SENSOR SENSOR SENSOR SENSOR SENSOR SENSOR SENSOR SENSOR */
+//////////////////////////////////////////////////////////////
+/* SENSOR SENSOR SENSOR SENSOR SENSOR SENSOR SENSOR SENSOR */
+//////////////////////////////////////////////////////////////
 
 /*------------ API : Main : Get data from sensors, send to MongoDB ------------*/
 
@@ -159,7 +155,7 @@ app.post("/receiveData", (req, res) => {
     // ------- Keep value ------
 
     // :: Team ID & Timestamp
-    sensors.Timestamp = timestamp;
+    sensors.Timestamp = Date.now();
     sensors.TeamID = teamID;
 
     // :: Temperature (Signed)
@@ -196,15 +192,6 @@ app.post("/receiveData", (req, res) => {
 
     // Save values from sensors to database
 
-    // barometer.save(err => {
-    //     if (err) {
-    //         console.log(err);
-    //         return;
-    //     } else {
-    //         // console.log("baro saved");
-    //         res.redirect("/");
-    //     }
-    // });
     sensors.save(err => {
         if (err) {
             console.log(err);
@@ -216,8 +203,6 @@ app.post("/receiveData", (req, res) => {
     });
 
 });
-
-
 
 /*------------ API : show all or some temperature value ------------*/
 
@@ -564,7 +549,7 @@ app.get("/sensorsData/personOut/:teamID/:records", (req, res) => {
 app.post("/addData", (req, res) => {
     let sensors = new Sensors();
 
-    sensors.Timestamp = req.body.Timestamp;
+    sensors.Timestamp = Date.now();
     sensors.TeamID = req.body.TeamID;
     sensors.Temperature = req.body.Temperature;
     sensors.Humidity = req.body.Humidity;
@@ -633,9 +618,27 @@ app.delete("/deleteData/:teamID", (req, res) => {
     });
 })
 
+//////////////////////////////////////////////////////////////
+/* BEACON BEACON BEACON BEACON BEACON BEACON BEACON BEACON  */
+//////////////////////////////////////////////////////////////
+/* BEACON BEACON BEACON BEACON BEACON BEACON BEACON BEACON  */
+//////////////////////////////////////////////////////////////
+
+// app.post("/beaconsData/receiveData", (req, res) => {
+
+//     let beacon = new Beacon();
+
+//     time
+//     status = req.body.events[0].source.beacon.type;         // Enter (P_IN) or Leave (P_Out)
+
+//     if(status == "enter"){inBvalue += 1;}
+//     else if(status == "leave"){outBvalue += 1;} 
+
 
 
 // });
+
+
 
 /*------------ Start Server ------------*/
 
