@@ -635,31 +635,46 @@ app.post("/beaconsData/receiveData", (req, res) => {
     beacon.Timestamp = new Date();
     status = req.body.events[0].beacon.type;         // Enter (P_IN) or Leave (P_Out)
 
-    if (status == "enter") { inBvalue += 1; }
+    if (status == "enter") {
+        setTimeout(() => {
+            inBvalue += 1;
+            beacon.P_IN = inBvalue;
+            beacon.P_OUT = outBvalue;
+            beacon.save((err, data) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                } else {
+                    console.log("all saved");
+                    res.send(data);
+                }
+            });
+        }, 1000)
+    }
     else if (status == "leave") { outBvalue += 1; }
 
-    beacon.P_IN = inBvalue;
-    beacon.P_OUT = outBvalue;
+    // beacon.P_IN = inBvalue;
+    // beacon.P_OUT = outBvalue;
     console.log(`body : ${JSON.stringify(req.body)}`);
     console.log(`status : ${status}`);
     console.log(`event[0] : ${JSON.stringify(req.body.events[0])}`);
     console.log(`in : ${inBvalue}`);
     console.log(`out : ${outBvalue}`);
 
-    // setTimeout(() => {
-    //     inBvalue = 0;
-    //     outBvalue = 0;
-    // }, 60000)
+    setTimeout(() => {
+        inBvalue = 0;
+        outBvalue = 0;
+    }, 60000)
 
-    beacon.save((err, data) => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            console.log("all saved");
-            res.send(data);
-        }
-    });
+    // beacon.save((err, data) => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         console.log("all saved");
+    //         res.send(data);
+    //     }
+    // });
 
 });
 
