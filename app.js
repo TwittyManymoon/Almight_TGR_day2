@@ -54,7 +54,9 @@ let Digitaloutput = require("./models/digitaloutput");
 
 var payload, teamID, timestamp, barovalue, tempvalue, humidvalue, accexvalue, acceyvalue, accezvalue,
     gyroxvalue, gyroyvalue, gyrozvalue, magvalue, digitalinvalue, digitaloutvalue,
-    invalue, outvalue, inBvalue, outBvalue;
+    invalue, outvalue;
+
+var inBvalue, outBvalue = 0;
 
 /*------------ Database setup : EDIT ------------*/
 
