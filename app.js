@@ -652,6 +652,7 @@ app.post("/beaconsData/receiveData", (req, res) => {
     setTimeout(() => {
         inBvalue = 0;
         outBvalue = 0;
+        console.log("Person reset!!!")
     }, 60000)
 
     beacon.save((err, data) => {
