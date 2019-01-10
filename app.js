@@ -33,6 +33,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
+// const request = require("request");     // LINE - Beacon
 
 const port = 8080;
 //const Schema = mongoose.Schema;
@@ -627,23 +628,24 @@ app.delete("/sensorsData/deleteData/:teamID", (req, res) => {
 /* BEACON BEACON BEACON BEACON BEACON BEACON BEACON BEACON  */
 //////////////////////////////////////////////////////////////
 
+// LINE - Beacon
 const Header = {
     "Content-Type": 'application/json',
-    "Authorization": "Bearer {HRibRmD6OaubdC9n+eIEDXzR2E2idTyUUgQC/ZUyHoBxwoS9LLRDqGpGow3OtElm7DB0MlLHTswalwSIZQozOUdjuL5hB28D7rXjOwNuROi5rNQ9MwczFMmIfr73pQqQ8E10j9AvQmgZBg616wFa6gdB04t89/1O/w1cDnyilFU=}"
+    "Authorization": "Bearer HRibRmD6OaubdC9n+eIEDXzR2E2idTyUUgQC/ZUyHoBxwoS9LLRDqGpGow3OtElm7DB0MlLHTswalwSIZQozOUdjuL5hB28D7rXjOwNuROi5rNQ9MwczFMmIfr73pQqQ8E10j9AvQmgZBg616wFa6gdB04t89/1O/w1cDnyilFU="
 }
 
 let inBvalue = 0;
 let outBvalue = 0;
 let beaconStatus = 0;
 
-app.post("/webhook", (req, res) => {
-    // app.post("/beaconsData/receiveData", (req, res) => {
+
+app.post("/beaconsData/receiveData", (req, res) => {
 
     let beacon = new Beacon();
-
+    console.log(req.body)
 
     beacon.Timestamp = new Date();
-    status = req.body.events[0].beacon.type;         // Enter (P_IN) or Leave (P_Out)
+    status = req.body.beacon.type;         // Enter (P_IN) or Leave (P_Out)
 
     if (status == "enter") { inBvalue += 1; }
     else if (status == "leave") { outBvalue += 1; }
@@ -661,7 +663,6 @@ app.post("/webhook", (req, res) => {
 
     console.log(`body : ${JSON.stringify(req.body)}`);
     console.log(`status : ${status}`);
-    console.log(`event[0] : ${JSON.stringify(req.body.events[0])}`);
     console.log(`in : ${inBvalue}`);
     console.log(`out : ${outBvalue}`);
 
@@ -669,7 +670,7 @@ app.post("/webhook", (req, res) => {
         inBvalue = 0;
         outBvalue = 0;
         console.log("Person reset!!!")
-    }, 60000)
+    }, 60000)  //one hour
 
     beacon.save((err, data) => {
         if (err) {
@@ -683,26 +684,6 @@ app.post("/webhook", (req, res) => {
 
 });
 
-function reply(reply_token, msg) {
-    let body = JSON.stringify({
-        replyToken = reply_token,
-        messages: [{
-            type: 'text',
-            text: msg
-        }]
-    })
-    curl('reply', body);
-}
-
-function curl(method, body) {
-    request.post({
-        url: 'https://api.line.me/v2/bot/message/' + method,
-        headers: Header,
-        body: body
-    }, (err, res, body) => {
-        console.log('status = ' + res.statusCode)
-    })
-}
 
 
 /*------------ Start Server ------------*/
