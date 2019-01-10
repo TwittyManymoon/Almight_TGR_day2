@@ -297,13 +297,7 @@ app.get("/sensorsData/temperature/:teamID/:records", (req, res) => {
         });
     }
 
-
-
-
-
 });
-
-
 /*------------ API : Add 1 data by Team ID ------------*/
 app.post("/addData", (req, res) => {
     let sensors = new Sensors();
