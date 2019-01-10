@@ -221,83 +221,84 @@ app.post("/receiveData", (req, res) => {
 
 /*------------ API : Add 1 data by Team ID ------------*/
 
-app.get("/sensorsData/temperature/:teamID/:records", (req, res) => {
+// app.get("/sensorsData/temperature/:teamID/:records", (req, res) => {
 
-    let teamID = req.params.teamID;
-    let records = req.params.records;
+//     let teamID = req.params.teamID;
+//     let records = req.params.records;
 
-    let temp_array = [];
+//     let temp_array = [];
 
-    // initialize promise
+//     // initialize promise
 
-    var promise_temp = new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve();
-        }, 1000);
-    });
+//     var promise_temp = new Promise(function (resolve, reject) {
+//         setTimeout(function () {
+//             resolve();
+//         }, 1000);
+//     });
 
-    // async function
+//     // async function
 
-    if (records == "all") {
-        Sensors.find({ TeamID: teamID }, (err, value) => {
-            if (err) {
-                console.log(err);
-            } else {
+//     if (records == "all") {
+//         Sensors.find({ TeamID: teamID }, (err, value) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
 
-                for (let i = 0; i < value.length; i++) {
-                    console.log(`
-        timestamp : ${value[i].Timestamp}
-        temperature : ${value[i].Temperature}
-        `);
-                    promise_temp
-                        .then(function () {
-                            temp_array.push(value[i].Temperature);
-                            console.log(temp_array);
+//                 for (let i = 0; i < value.length; i++) {
+//                     console.log(`
+//         timestamp : ${value[i].Timestamp}
+//         temperature : ${value[i].Temperature}
+//         `);
+//                     promise_temp
+//                         .then(function () {
+//                             temp_array.push(value[i].Temperature);
+//                             console.log(temp_array);
 
-                        })
+//                         })
 
-                        .then(function () {
-                            res.send(`
-            temperature : ${temp_array}
-            `);
-                        });
-                }
-            }
-        });
-    }
+//                         .then(function () {
+//                             res.send(`
+//             temperature : ${temp_array}
+//             `);
+//                         });
+//                 }
+//             }
+//         });
+//     }
 
-    else {
-        records = parseInt(records, 10);
-        Sensors.find({ TeamID: teamID }, (err, value) => {
-            if (err) {
-                console.log(err);
-            } else {
+//     else {
+//         records = parseInt(records, 10);
+//         Sensors.find({ TeamID: teamID }, (err, value) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
 
-                for (let i = (value.length - 1); i > ((value.length) - records) - 1; i--) { //wtf
-                    console.log(`
-        timestamp : ${value[i].Timestamp}
-        temperature : ${value[i].Temperature}
-        `);
-                    promise_temp
-                        .then(function () {
-                            temp_array.push(value[i].Temperature);
-                            console.log(temp_array);
+//                 for (let i = (value.length - 1); i > ((value.length) - records) - 1; i--) { //wtf
+//                     console.log(`
+//         timestamp : ${value[i].Timestamp}
+//         temperature : ${value[i].Temperature}
+//         `);
+//                     promise_temp
+//                         .then(function () {
+//                             temp_array.push(value[i].Temperature);
+//                             console.log(temp_array);
 
-                        })
+//                         })
 
-                        .then(function () {
-                            res.send(`
-                temperature : ${temp_array}
-                `);
-                        });
+//                         .then(function () {
+//                             res.send(`
+//                 temperature : ${temp_array}
+//                 `);
+//                         });
 
 
-                }
-            }
-        });
-    }
+//                 }
+//             }
+//         });
+//     }
 
-});
+// });
+
 /*------------ API : Add 1 data by Team ID ------------*/
 app.post("/addData", (req, res) => {
     let sensors = new Sensors();
