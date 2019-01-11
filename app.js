@@ -152,7 +152,8 @@ app.post("/sensorsData/receiveData", (req, res) => {
     // payload3 = req.body.DevEUI_uplink.payload;
     timestamp = JSON.stringify(req.body.DevEUI_uplink.Time);                                // Timestamp
     // bbb = req.body;
-    // console.log(`fucking data : ${teamID} = ${payload}`);        
+    // console.log(`fucking data : ${teamID} = ${payload}`);  
+    console.log(`------- ALMIGHT HARDWARE ------`);
     console.log(`payload : ${payload}`);
     console.log(`body : ${devEUI}`);
     console.log(`teamID : ${teamID}`);
@@ -185,12 +186,12 @@ app.post("/sensorsData/receiveData", (req, res) => {
     console.log(`hunmid : ${humidvalue}`);
 
     // :: Person In
-    invalue = (parseInt(payload.slice(19, 23), 16) * 1);
+    invalue = (parseInt(payload.slice(19, 23), 16) * 0.01);
     sensors.P_IN = invalue;
     console.log(`in : ${invalue}`);
 
     // :: Person In
-    outvalue = (parseInt(payload.slice(27, 31), 16) * 1);
+    outvalue = (parseInt(payload.slice(27, 31), 16) * 0.01);
     sensors.P_OUT = outvalue;
     console.log(`out : ${outvalue}`);
 
@@ -668,6 +669,7 @@ app.post("/beaconsData/receiveData", (req, res) => {
     beacon.P_OUT = outBvalue;
     beacon.Status = beaconStatus;
 
+    console.log(`------- DATA ANALYTIC -------`)
     console.log(`body : ${JSON.stringify(req.body)}`);
     console.log(`status : ${status}`);
     console.log(`in : ${inBvalue}`);
