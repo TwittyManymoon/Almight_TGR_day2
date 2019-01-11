@@ -44,6 +44,7 @@ const app = express();
 // :: Bring in model
 let Sensors = require("./models/sensors");
 let Beacon = require("./models/beacon");
+let Summary = require("./models/summary");
 
 let Barometer = require("./models/barometer");
 let Humidity = require("./models/humidity");
@@ -636,15 +637,21 @@ const Header = {
 
 let inBvalue = 0;
 let outBvalue = 0;
-let beaconStatus = 0;
+let sumInBvalue = 0; // sum of people-in in 1 hour
+let beaconStatus = 0; // 0 normal : 1 error
+let serverSend = 0; // hours
 
 
 app.post("/beaconsData/receiveData", (req, res) => {
 
+    // ----- Beacon
+
     let beacon = new Beacon();
     console.log(req.body)
+    let serverDate = new Date()
 
-    beacon.Timestamp = new Date();
+    beacon.Timestamp = serverDate;
+    serverSend = serverDate.getHours();
     status = req.body.beacon.type;         // Enter (P_IN) or Leave (P_Out)
 
     if (status == "enter") { inBvalue += 1; }
@@ -667,10 +674,13 @@ app.post("/beaconsData/receiveData", (req, res) => {
     console.log(`out : ${outBvalue}`);
 
     setTimeout(() => {
+        sumInBvalue = inBvalue;
         inBvalue = 0;
         outBvalue = 0;
         console.log("Person reset!!!")
-    }, 60000)  //one hour
+
+
+    }, 3600000)  // one hour = 3600000
 
     beacon.save((err, data) => {
         if (err) {
@@ -681,6 +691,351 @@ app.post("/beaconsData/receiveData", (req, res) => {
             res.send(data);
         }
     });
+
+
+    Summary.save((err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("all saved");
+            res.send(data);
+        }
+    });
+
+    // ----- Summary
+
+    // let summary = new Summary();
+
+    // // compare date
+    // Sensors.find({ Timestamp: Date().toLocaleDateString("en-US") }, (err, data) => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     }
+    //     else {
+    //         // There is today!
+    //     }
+    // });
+
+
+
+});
+
+app.post("/beaconsData/putSanam", (req, res) => {
+
+    let summary = new Summary();
+    let present_db, present;
+
+    // // Compare Date 
+    // Summary.find({}, (err, data) => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     }
+    //     else {
+    //         let i = data.length - 1;
+    //         present_db = new Date(data[i].Timestamp).toLocaleDateString("en-US")
+    //         console.log(present_db);
+    //         res.send(present_db);
+    //     }
+    // }
+    // );
+
+    // present = Date.now();
+    // present = new Date(present).toLocaleDateString("en-US");
+
+    // // If present date (from db) is not equal to latest date - update the latest date
+    // if (present_db < present) {
+    //     Summary.Timestamp = present;
+    //     Summary.save((err, data) => {
+    //         if (err) {
+    //             console.log(err);
+    //             return;
+    //         } else {
+    //             console.log("all saved");
+    //         }
+    //     });
+    // }
+    // // If present date (from db) is equal to latest date, find the hour to insert data
+    // else {
+    //     Summary[serverSend] = sumInBvalue; // add total people-in in 1 hour
+    //     Summary[5]
+    //     ant = 6;
+    //     bird = 9;
+    //     serverSend
+    //     if (serverSend == bird) {
+    //         summary.update({ bird: "0" }, { bird: sumInBvalue }), ((err, data) => {
+    //             if (err) {
+    //                 console.log(err);
+    //                 return;
+    //             } else {
+    //                 console.log("all saved");
+    //                 res.send(data);
+    //             }
+    //         });
+    //     }
+
+
+    // }
+    console.log(req.body);
+    summary.hour9 = req.body.hour9;
+    summary.Timestamp = req.body.Timestamp;
+    summary.save((err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("all saved");
+            res.send(data);
+        }
+    });
+
+
+});
+
+app.get("/beaconsData/show1hour", (req, res) => {
+    // Compare Date 
+    let summary = new Summary();
+    let present_db, present;
+    let serverDate = new Date()
+
+    summary.Timestamp = serverDate;
+    serverSend = serverDate.getHours();
+
+    Summary.find({}, (err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        else {
+            let i = data.length - 1;
+            present_db = new Date(data[i].Timestamp).toLocaleDateString("en-US")
+            console.log(present_db);
+            console.log(present);
+            res.send(present_db);
+
+            // If present date (from db) is not equal to latest date - update the latest date
+            if (present_db < present) {
+                Summary.Timestamp = present;
+                summary.save((err, data) => {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else {
+                        console.log("all saved");
+                    }
+                });
+            }
+            // If present date (from db) is equal to latest date, find the hour to insert data
+            else if (present_db == present) {
+                // Summary[serverSend] = sumInBvalue; // add total people-in in 1 hour
+                console.log("pass!");
+                console.log(serverSend);
+                hour10 = 10;
+                sumInBvalue = 50;
+                aaaa = 20;
+                if (serverSend == hour0) {
+                    console.log("pass2");
+                    Summary.findOne({ hour0: "0" }, (err, doc) => {
+                        doc.hour0 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour1) {
+                    console.log("pass2");
+                    Summary.findOne({ hour1: "0" }, (err, doc) => {
+                        doc.hour1 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour2) {
+                    console.log("pass2");
+                    Summary.findOne({ hour2: "0" }, (err, doc) => {
+                        doc.hour2 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour3) {
+                    console.log("pass");
+                    Summary.findOne({ hour3: "0" }, (err, doc) => {
+                        doc.hour3 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour4) {
+                    console.log("pass2");
+                    Summary.findOne({ hour4: "0" }, (err, doc) => {
+                        doc.hour4 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour5) {
+                    console.log("pass2");
+                    Summary.findOne({ hour5: "0" }, (err, doc) => {
+                        doc.hour5 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour6) {
+                    console.log("pass2");
+                    Summary.findOne({ hour6: "0" }, (err, doc) => {
+                        doc.hour6 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour7) {
+                    console.log("pass2");
+                    Summary.findOne({ hour7: "0" }, (err, doc) => {
+                        doc.hour7 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour8) {
+                    console.log("pass2");
+                    Summary.findOne({ hour8: "0" }, (err, doc) => {
+                        doc.hour8 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour9) {
+                    console.log("pass2");
+                    Summary.findOne({ hour9: "0" }, (err, doc) => {
+                        doc.hour9 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour10) {
+                    console.log("pass");
+                    Summary.findOne({ hour10: "0" }, (err, doc) => {
+                        doc.hour10 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour11) {
+                    console.log("pass2");
+                    Summary.findOne({ hour11: "0" }, (err, doc) => {
+                        doc.hour11 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour12) {
+                    console.log("pass2");
+                    Summary.findOne({ hour12: "0" }, (err, doc) => {
+                        doc.hour12 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour13) {
+                    console.log("pass2");
+                    Summary.findOne({ hour13: "0" }, (err, doc) => {
+                        doc.hour13 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour14) {
+                    console.log("pass2");
+                    Summary.findOne({ hour14: "0" }, (err, doc) => {
+                        doc.hour14 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour15) {
+                    console.log("pass2");
+                    Summary.findOne({ hour15: "0" }, (err, doc) => {
+                        doc.hour15 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour16) {
+                    console.log("pass");
+                    Summary.findOne({ hour16: "0" }, (err, doc) => {
+                        doc.hour16 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour17) {
+                    console.log("pass2");
+                    Summary.findOne({ hour17: "0" }, (err, doc) => {
+                        doc.hour17 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour18) {
+                    console.log("pass2");
+                    Summary.findOne({ hour18: "0" }, (err, doc) => {
+                        doc.hour18 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour19) {
+                    console.log("pass2");
+                    Summary.findOne({ hour19: "0" }, (err, doc) => {
+                        doc.hour19 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour20) {
+                    console.log("pass2");
+                    Summary.findOne({ hour20: "0" }, (err, doc) => {
+                        doc.hour20 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour21) {
+                    console.log("pass2");
+                    Summary.findOne({ hour21: "0" }, (err, doc) => {
+                        doc.hour21 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour22) {
+                    console.log("pass2");
+                    Summary.findOne({ hour22: "0" }, (err, doc) => {
+                        doc.hour22 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+                if (serverSend == hour23) {
+                    console.log("pass");
+                    Summary.findOne({ hour23: "0" }, (err, doc) => {
+                        doc.hour23 = sumInBvalue;
+                        doc.save();
+                        console.log('hour saved');
+                    })
+                }
+
+            }
+        }
+    }
+    );
+
+    present = Date.now();
+    present = new Date(present).toLocaleDateString("en-US");
+
 
 });
 
