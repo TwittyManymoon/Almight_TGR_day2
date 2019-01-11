@@ -834,9 +834,33 @@ app.get("/beaconsData/show1hour", (req, res) => {
                 // Summary[serverSend] = sumInBvalue; // add total people-in in 1 hour
                 console.log("pass!");
                 console.log(serverSend);
+
+                hour0 = 0;
+                hour1 = 1;
+                hour2 = 2;
+                hour3 = 3;
+                hour4 = 4;
+                hour5 = 5;
+                hour6 = 6;
+                hour7 = 7;
+                hour8 = 8;
+                hour9 = 9;
                 hour10 = 10;
-                sumInBvalue = 50;
-                aaaa = 20;
+                hour11 = 11;
+                hour12 = 12;
+                hour13 = 13;
+                hour14 = 14;
+                hour15 = 15;
+                hour16 = 16;
+                hour17 = 17;
+                hour18 = 18;
+                hour19 = 19;
+                hour20 = 20;
+                hour21 = 21;
+                hour22 = 22;
+                hour23 = 23;
+
+
                 if (serverSend == hour0) {
                     console.log("pass2");
                     Summary.findOne({ hour0: "0" }, (err, doc) => {
