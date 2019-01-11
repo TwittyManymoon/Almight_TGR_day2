@@ -695,15 +695,15 @@ app.post("/beaconsData/receiveData", (req, res) => {
     });
 
 
-    Summary.save((err, data) => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            console.log("all saved");
-            res.send(data);
-        }
-    });
+    // summary.save((err, data) => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     } else {
+    //         console.log("all saved");
+    //         res.send(data);
+    //     }
+    // });
 
     // ----- Summary
 
