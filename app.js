@@ -1,6 +1,6 @@
 /*
 
-// ---- TGR 2019 : Server Side ----
+// ---- TGR 2019 : Server Side : Final version----
 // Gets sensors data from STM32 LoraWan by using POST method, also stores in MongoDB
 // consists of                                        
 //                Payload
@@ -9,17 +9,7 @@
 //                Barometer
 //                Temperature
 //                Humidity
-//                Accelerometer_X
-//                Accelerometer_Y
-//                Accelerometer_Z     
-//                Gyrometer_X        
-//                Gyrometer_Y        
-//                Gyrometer_Z        
-//                Magnetometer       
-//                DI                 
-//                DO
 
-// Test : Add temperature, humidity, P_IN, P_OUT
 
 // : Developed by :
 // ----- Twitty Manymoon
@@ -679,6 +669,7 @@ app.post("/beaconsData/receiveData", (req, res) => {
         sumInBvalue = inBvalue;
         inBvalue = 0;
         outBvalue = 0;
+
         console.log("Person reset!!!")
 
 
